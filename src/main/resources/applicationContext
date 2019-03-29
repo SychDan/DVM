@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+                                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                              xmlns:context="http://www.springframework.org/schema/context"
+                                              xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                              http://www.springframework.org/schema/beans/spring-beans.xsd
+                                              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                                              http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                                              http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd">
+    <context:component-scan base-package="ru.mephi.kaf82.DVM"/>
+    <bean id="transactionFilter" class="ru.mephi.kaf82.DVM.security.TransactionFilter"/>
+    <!-- Properties -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:datasource.properties</value>
+                <value>classpath:hibernate.properties</value>
+                <!--<value>classpath:profile.properties</value>-->
+                <!--<value>classpath:wrike.properties</value>-->
+                <!--<value>classpath:email.properties</value>-->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${datasource.driverClassName}"/>
+        <property name="jdbcUrl" value="${datasource.url}"/>
+        <property name="user" value="${datasource.username}"/>
+        <property name="password" value="${datasource.password}"/>
+        <property name="initialPoolSize" value="20"/>
+        <property name="maxIdleTime" value="10000"/>
+        <property name="maxPoolSize" value="40"/>
+    </bean>
+
+    <context:component-scan base-package="ru.mephi.kaf82"/>
+    <jpa:repositories base-package="ru.mephi.kaf82.DVM.repository"/>
+    <tx:annotation-driven/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="ru.mephi.kaf82.DVM.model"/>
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+    <!-- Resources -->
+    <!-- Loader -->
+    <bean class="ru.mephi.kaf82.DVM.DataLoader"/>
+</beans>
+
