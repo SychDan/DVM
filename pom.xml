@@ -342,6 +342,28 @@
                 </configuration>
             </plugin>
 
+            <!-- for Heroku -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>copy</goal></goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>9.0.17.0</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -403,12 +425,12 @@
                 <profile.selected>development</profile.selected>
             </properties>
         </profile>
-<!--        <profile>-->
-<!--            <id>docker</id>-->
-<!--            <properties>-->
-<!--                <profile.selected>docker</profile.selected>-->
-<!--            </properties>-->
-<!--        </profile>-->
+        <profile>
+            <id>heroku</id>
+            <properties>
+                <profile.selected>heroku</profile.selected>
+            </properties>
+        </profile>
         <profile>
             <id>development-mem</id>
             <activation>
