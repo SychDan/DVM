@@ -54,7 +54,7 @@ public class TerminalController {
             return "addOrEditTerminal";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
-            if (terminal.isNew()) {
+            if (terminal.getId() == 0) {
                 redirectAttributes.addFlashAttribute("msg" ,"Терминал успешно добавлен");
             } else {
                 redirectAttributes.addFlashAttribute("msg","Терминал успешно обновлен");

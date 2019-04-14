@@ -12,5 +12,6 @@
 </head>
 <body>
 Hello ${name}
+<button onclick="location.href='/home'">Войти</button>
 </body>
 </html>

@@ -1,12 +1,20 @@
 package ru.mephi.kaf82.DVM.model;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-public class Terminal extends AbstractPersistable<Long> {
+public class Terminal {
+
+    @Id
+    @GeneratedValue
+    @Nullable
+    private long id;
 
     @Column(length = 200)
     private String nameGroup;
@@ -22,6 +30,14 @@ public class Terminal extends AbstractPersistable<Long> {
 
     @Column(length = 30)
     private String ip;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNameGroup() {
         return nameGroup;

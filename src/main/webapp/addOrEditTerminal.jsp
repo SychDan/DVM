@@ -15,7 +15,7 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${terminalForm['new']}">
+    <c:when test="${terminalForm['id'] eq 0}">
         <h1>Добавление терминала</h1>
     </c:when>
     <c:otherwise>
@@ -25,7 +25,8 @@
 <br />
 <spring:url value="/home" var="actionUrl"/>
 <form:form method="post" modelAttribute="terminalForm" action="${actionUrl}">
-    <form:hidden path="id"/>
+    ${terminalForm.id}
+    <form:input path="id" type="hidden" id="ID"/>
     <spring:bind path="nameGroup">
         <div class="form-group ${status.error ? 'has-error' : ''}">
             <label class="col-sm-2 control-label">nameGroup</label>
@@ -70,12 +71,12 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <c:choose>
-                <c:when test="${terminalForm['new']}">
-                    <button type="submit" class="btn-lg btn-primary pull-right">Add
+                <c:when test="${terminalForm['id'] eq 0}">
+                    <button type="submit" class="btn-lg btn-primary pull-right">Добавить
                     </button>
                 </c:when>
                 <c:otherwise>
-                    <button type="submit" class="btn-lg btn-primary pull-right">Update
+                    <button type="submit" class="btn-lg btn-primary pull-right">Обновить
                     </button>
                 </c:otherwise>
             </c:choose>
