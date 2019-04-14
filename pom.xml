@@ -25,12 +25,13 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+        <!-- PostgreSQL JDBC Driver -->
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <version>42.2.4</version>
         </dependency>
+
 
 
         <!-- Spring MVC Dependency -->
@@ -252,6 +253,11 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>2.0.8</version>
             </plugin>
         </plugins>
     </build>
