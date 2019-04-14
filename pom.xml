@@ -14,199 +14,108 @@
         <spring.version>5.0.8.RELEASE</spring.version>
         <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <c3p0.version>0.9.5.2</c3p0.version>
+        <hibernate.validator>5.4.1.Final</hibernate.validator>
         <wtp.version>none</wtp.version>
+        <jsp.version>2.3.1</jsp.version>
+        <servlets.version>3.1.0</servlets.version>
+        <tld.version>1.1.2</tld.version>
+        <jstl.version>1.2.1</jstl.version>
+        <hsqldb.version>1.8.0.10</hsqldb.version>
     </properties>
 
     <dependencies>
-        <!-- Embedded PostgreSQL -->
+        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
         <dependency>
-            <groupId>ru.yandex.qatools.embed</groupId>
-            <artifactId>postgresql-embedded</artifactId>
-            <version>2.10</version>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
         </dependency>
 
-        <!-- Logback Classic -->
+
+        <!-- Spring MVC Dependency -->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
-        <!-- JCL 1.2 Implemented Over SLF4J -->
+        <!-- Spring ORM -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <!-- Hibernate -->
+        <!-- Hibernate Core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-java8</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
+        <!-- Hibernate-C3P0 Integration -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!-- c3p0 -->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0.version}</version>
+        </dependency>
+
+        <!-- Hibernate Validator -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>5.3.6.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.12.Final</version>
+            <version>${hibernate.validator}</version>
         </dependency>
 
-        <!-- SPRING FRAMEWORK -->
-        <!--
-         Core utilities used by other modules.
-         Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*)
-     -->
+        <!-- JSTL Dependency -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-            Expression Language (depends on spring-core)
-            Define this if you use Spring Expression APIs (org.springframework.expression.*)
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-            Bean Factory and JavaBeans utilities (depends on spring-core)
-            Define this if you use Spring Bean APIs (org.springframework.beans.*)
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-            Aspect Oriented Programming (AOP) Framework (depends on spring-core, spring-beans)
-            Define this if you use Spring AOP APIs (org.springframework.aop.*)
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-            Application Context (depends on spring-core, spring-expression, spring-aop, spring-beans)
-            This is the central artifact for Spring's Dependency Injection Container and is generally always defined
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-            Various Application Context utilities, including EhCache, JavaMail, Quartz, and Freemarker integration
-            Define this if you need any of these integrations
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-            Transaction Management Abstraction (depends on spring-core, spring-beans, spring-aop, spring-context)
-            Define this if you use Spring Transactions or DAO Exception Hierarchy
-            (org.springframework.transaction.*/org.springframework.dao.*)
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!--
-      Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, and iBatis.
-      (depends on spring-core, spring-beans, spring-context, spring-tx)
-      Define this if you need ORM (org.springframework.orm.*)
-  -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <!--
-    Web application development utilities applicable to both Servlet and Portlet Environments
-    (depends on spring-core, spring-beans, spring-context)
-    Define this if you use Spring MVC, or wish to use Struts, JSF, or another web framework with Spring (org.springframework.web.*)
--->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <!--
-      Support for testing Spring applications with tools such as JUnit and TestNG
-      This artifact is generally always defined with a 'test' scope for the integration testing framework and unit testing stubs
-        -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+            <version>${jstl.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${springsecurity.version}</version>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>${tld.version}</version>
         </dependency>
 
+        <!-- Servlet Dependency -->
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${springsecurity.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlets.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSP Dependency -->
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${jsp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- HSQL Dependency -->
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.1</version>
         </dependency>
 
         <dependency>
@@ -214,110 +123,10 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>2.0.9.RELEASE</version>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-            <version>2.0.9.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons-core</artifactId>
-            <version>1.4.1.RELEASE</version>
-        </dependency>
-
-        <!-- PostgreSQL JDBC Driver -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.4</version>
-        </dependency>
-
-        <!-- HyperSQL -->
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.4.1</version>
-        </dependency>
-
-        <!-- JAVAX -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-core</artifactId>
-            <version>2.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-        </dependency>
-
-        <!-- Email -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Expression Language 3.0 API -->
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <!-- Apache Commons Lang -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.8</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>5.1.5.RELEASE</version>
-        </dependency>
-
-        <!-- Flyway -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>5.1.4</version>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>4.2.3.RELEASE</version>
         </dependency>
 
     </dependencies>
@@ -459,12 +268,12 @@
             <properties>
                 <profile.selected>heroku</profile.selected>
             </properties>
-        </profile>
-        <profile>
-            <id>development-mem</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>development-mem</id>
             <properties>
                 <profile.selected>development-mem</profile.selected>
             </properties>

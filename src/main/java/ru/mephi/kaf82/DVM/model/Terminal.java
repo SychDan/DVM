@@ -1,0 +1,65 @@
+package ru.mephi.kaf82.DVM.model;
+
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class Terminal extends AbstractPersistable<Long> {
+
+    @Column(length = 200)
+    private String nameGroup;
+
+    @Column(length = 11)
+    private int parentId;
+
+    @Column(length = 10)
+    private String termNumber;
+
+    @Column(length = 200)
+    private String address;
+
+    @Column(length = 30)
+    private String ip;
+
+    public String getNameGroup() {
+        return nameGroup;
+    }
+
+    public void setNameGroup(String nameGroup) {
+        this.nameGroup = nameGroup;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTermNumber() {
+        return termNumber;
+    }
+
+    public void setTermNumber(String termNumber) {
+        this.termNumber = termNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+}
