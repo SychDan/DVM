@@ -1,16 +1,24 @@
 package ru.mephi.kaf82.DVM.model;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Created by Vakobo
  */
 
 @Entity
-public class Person extends AbstractPersistable<Long> {
+public class Person {
+
+    @Id
+    @GeneratedValue
+    @Nullable
+    private long id;
 
     private String family;
 
@@ -40,6 +48,14 @@ public class Person extends AbstractPersistable<Long> {
 
     @Column(length = 2)
     private int life;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFamily() {
         return family;
