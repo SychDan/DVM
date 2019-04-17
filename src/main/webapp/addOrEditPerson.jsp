@@ -12,6 +12,9 @@
 <html>
 <head>
     <title>Title</title>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/uploadFile.js"></script>
 </head>
 <body>
 <c:choose>
@@ -23,8 +26,8 @@
     </c:otherwise>
 </c:choose>
 <br />
-<spring:url value="/persons" var="actionUrl"/>
-<form:form method="post" modelAttribute="personForm" action="${actionUrl}">
+<spring:url value="/persons" var="actionUrl" />
+<form:form method="post" modelAttribute="personForm" action="${actionUrl}" enctype="multipart/form-data">
     ${perosnForm.id}
     <form:input path="id" type="hidden" id="ID"/>
     <spring:bind path="family">
@@ -39,7 +42,7 @@
     </spring:bind>
     <spring:bind path="firstName">
         <div class="form-group ${status.error ? 'has-error' : ''}">
-            <label class="col-sm-2 control-label">termNumber</label>
+            <label class="col-sm-2 control-label">firstName</label>
             <div class="col-sm-10">
                 <form:input path="firstName" type="text" class="form-control"
                             id="firstName" placeholder="firstName" />
@@ -94,6 +97,27 @@
                 <form:input path="status" type="text" class="form-control"
                             id="status" placeholder="status" />
                 <form:errors path="status" class="control-label" />
+            </div>
+        </div>
+    </spring:bind>
+
+    <spring:bind path="pass">
+        <div class="form-group ${status.error ? 'has-error' : ''}">
+            <label class="col-sm-2 control-label">pass</label>
+            <div class="col-sm-10">
+                <form:input path="pass" type="text" class="form-control"
+                            id="status" placeholder="pass" />
+                <form:errors path="pass" class="control-label" />
+            </div>
+        </div>
+    </spring:bind>
+
+    <spring:bind path="file">
+        <div class="form-group ${status.error ? 'has-error' : ''}">
+            <label class="col-sm-2 control-label">status</label>
+            <div class="col-sm-10">
+                <form:input type="file" path="file" id="file" class="form-control input-sm"/>
+                <form:errors path="file" class="control-label" />
             </div>
         </div>
     </spring:bind>

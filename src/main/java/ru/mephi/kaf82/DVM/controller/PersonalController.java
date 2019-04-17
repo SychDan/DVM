@@ -2,6 +2,7 @@ package ru.mephi.kaf82.DVM.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -10,12 +11,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mephi.kaf82.DVM.model.Person;
 import ru.mephi.kaf82.DVM.repository.PersonRepository;
 import ru.mephi.kaf82.DVM.util.PersonValidator;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class PersonalController {
@@ -48,6 +52,13 @@ public class PersonalController {
             } else {
                 redirectAttributes.addFlashAttribute("msg", "Пользователь успешно обновлен");
             }
+            MultipartFile file = person.getFile();
+            try {
+                person.setContent(file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            person.setPhoto(file.getOriginalFilename());
             personRepository.save(person);
         }
         model.addAttribute("persons", personRepository.findAll());
@@ -69,11 +80,22 @@ public class PersonalController {
     }
 
     @RequestMapping(value = "/persons/{id}/delete", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
         personRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Пользователь успешно удален!");
         return "redirect:/persons";
+    }
 
+    @RequestMapping(value = { "/persons/{id}/download" }, method = RequestMethod.GET)
+    public String downloadDocument(@PathVariable long id, HttpServletResponse response) throws IOException {
+        Person person = personRepository.findById(id).get();
+        response.setContentType(person.getContentType());
+        response.setContentLength(person.getContent().length);
+        response.setHeader("Content-Disposition","attachment; filename=\"" + person.getPhoto() +"\"");
+
+        FileCopyUtils.copy(person.getContent(), response.getOutputStream());
+
+        return "redirect:/persons";
     }
 }

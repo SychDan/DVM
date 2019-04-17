@@ -1,12 +1,14 @@
 package ru.mephi.kaf82.DVM.model;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Transient;
 
 /**
  * Created by Vakobo
@@ -43,8 +45,16 @@ public class Person {
     @Column(length = 11)
     private String pass;
 
+    @Transient
     @Column(length = 200)
+    private MultipartFile file;
+
     private String photo;
+
+    @Lob
+    private byte[] content;
+
+    private String contentType;
 
     @Column(length = 2)
     private int life;
@@ -145,12 +155,12 @@ public class Person {
         this.pass = pass;
     }
 
-    public String getPhoto() {
-        return photo;
+    public MultipartFile getFile() {
+        return file;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public int getLife() {
@@ -159,5 +169,29 @@ public class Person {
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

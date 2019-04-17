@@ -54,15 +54,17 @@
         <td>${person.status}</td>
         <td>${person.otdel}</td>
         <td>${person.doljn}</td>
-
         <td>
             <spring:url value="/persons/${person.id}/delete" var="deleteUrl" />
             <spring:url value="/persons/${person.id}/update" var="updateUrl" />
+            <spring:url value="/persons/${person.id}/download" var="downloadUrl" />
 
             <button class="btn btn-primary"
                     onclick="location.href='${updateUrl}'">Update</button>
             <button class="btn btn-danger"
                     onclick="location.href='${deleteUrl}'">Delete</button>
+            <button class="btn btn-danger"
+                    onclick="location.href='${downloadUrl}'">Download</button>
         </td>
     </tr>
 </c:forEach>

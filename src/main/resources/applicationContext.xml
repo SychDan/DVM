@@ -92,6 +92,8 @@
         <property name="paramName" value="lang" />
     </bean>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
     <!-- Resources -->
     <!-- Loader -->
     <bean class="ru.mephi.kaf82.DVM.DataLoader"/>

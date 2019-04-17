@@ -16,6 +16,8 @@ public class PersonValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
+        Person person = (Person) o;
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"family","NotEmpty.personForm.family");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"firstName","NotEmpty.personForm.firstName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"secondName","NotEmpty.personForm.secondName");
@@ -23,5 +25,12 @@ public class PersonValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"access","NotEmpty.personForm.access");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"admin","NotEmpty.personForm.admin");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"status","NotEmpty.personForm.status");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"pass","NotEmpty.personForm.pass");
+
+        if(person.getFile()!=null){
+            if (person.getFile().getSize() == 0) {
+                errors.rejectValue("file", "missing.file");
+            }
+        }
     }
 }
