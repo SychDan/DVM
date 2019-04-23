@@ -10,7 +10,7 @@ import ru.mephi.kaf82.DVM.model.Otchet;
 import java.util.Arrays;
 
 @Service
-public class OthcetValidator implements Validator {
+public class OtchetValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
         return Otchet.class.equals(aClass);
@@ -23,7 +23,7 @@ public class OthcetValidator implements Validator {
 
         if(otchet.getMedia().getFile()!=null){
             if (otchet.getMedia().getFile().getSize() == 0) {
-                errors.rejectValue("photo.file", "missing.media");
+                errors.rejectValue("media.file", "missing.media");
             }
         }
 
@@ -40,7 +40,7 @@ public class OthcetValidator implements Validator {
 
         String[] suffixMedia = {".mp4", ".avi", ".mkv"};
         if (otchet.getPhoto().getFile() != null && !Arrays.stream(suffixMedia).anyMatch(e -> otchet.getMedia().getFile().getOriginalFilename().endsWith(e))) {
-            errors.rejectValue("photo.file", "unsupportedFormat.file");
+            errors.rejectValue("media.file", "unsupportedFormat.file");
         }
     }
 }

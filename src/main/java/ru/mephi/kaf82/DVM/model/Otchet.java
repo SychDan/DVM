@@ -1,8 +1,11 @@
 package ru.mephi.kaf82.DVM.model;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.time.Instant;
@@ -12,7 +15,12 @@ import java.time.Instant;
  */
 
 @Entity
-public class Otchet extends AbstractPersistable<Long> {
+public class Otchet {
+
+    @Id
+    @GeneratedValue
+    @Nullable
+    private long id;
 
     private String name;
 
@@ -26,6 +34,14 @@ public class Otchet extends AbstractPersistable<Long> {
 
     @OneToOne
     private Photo photo;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -13,7 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-<button onclick="location.href='/persons'">Спривочники</button>
+<button onclick="location.href='/persons'">Справочники</button>
+<button onclick="location.href='/otchets'">Отчеты</button>
 
 <c:if test="${not empty msg}">
     <div class="alert alert-${css} alert-dismissible" role="alert">

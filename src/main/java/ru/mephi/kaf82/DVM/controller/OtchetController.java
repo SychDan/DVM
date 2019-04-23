@@ -19,7 +19,7 @@ import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.OtchetRepository;
 import ru.mephi.kaf82.DVM.repository.PhotoRepository;
-import ru.mephi.kaf82.DVM.util.OthcetValidator;
+import ru.mephi.kaf82.DVM.util.OtchetValidator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ import java.time.Instant;
 public class OtchetController {
 
     @Resource
-    private OthcetValidator othcetValidator;
+    private OtchetValidator otchetValidator;
 
     @Resource
     private OtchetRepository otchetRepository;
@@ -43,17 +43,17 @@ public class OtchetController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(othcetValidator);
+        binder.setValidator(otchetValidator);
     }
 
     @RequestMapping(value = "/otchets", method = RequestMethod.GET)
-    public String personList(Model model) {
+    public String otchetList(Model model) {
         model.addAttribute("otchets", otchetRepository.findAll());
         return "otchets";
     }
 
     @RequestMapping(value = "/otchets", method = RequestMethod.POST)
-    public String savePerson(@ModelAttribute("otchetForm") @Validated Otchet otchet, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+    public String save(@ModelAttribute("otchetForm") @Validated Otchet otchet, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         if (result.hasErrors()) {
             return "addOrEditOtchet";
         } else {
@@ -75,11 +75,13 @@ public class OtchetController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            otchet.setDate(Instant.now());
             mediaRepository.save(otchet.getMedia());
             photoRepository.save(otchet.getPhoto());
             otchet.setPhoto(otchet.getPhoto());
             otchetRepository.save(otchet);
         }
+        model.addAttribute("otchets", otchetRepository.findAll());
         return "redirect:/otchets";
     }
 
@@ -90,7 +92,8 @@ public class OtchetController {
         Media media = new Media();
         otchet.setDate(Instant.now());
         otchet.setPhoto(photo);
-        model.addAttribute("ochetForm", otchet);
+        otchet.setMedia(media);
+        model.addAttribute("otchetForm", otchet);
         return "addOrEditOtchet";
     }
 
@@ -109,8 +112,8 @@ public class OtchetController {
         return "redirect:/otchets";
     }
 
-    @RequestMapping(value = { "/otchets/{id}/download" }, method = RequestMethod.GET)
-    public String downloadDocument(@PathVariable long id, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = { "/otchets/{id}/downloadPhoto" }, method = RequestMethod.GET)
+    public String downloadPhoto(@PathVariable long id, HttpServletResponse response) throws IOException {
         Otchet otchet = otchetRepository.findById(id).get();
         Photo photo = otchet.getPhoto();
         response.setContentType(photo.getContentType());
@@ -118,6 +121,19 @@ public class OtchetController {
         response.setHeader("Content-Disposition","attachment; filename=\"" + photo.getPhoto() +"\"");
 
         FileCopyUtils.copy(photo.getContent(), response.getOutputStream());
+
+        return "redirect:/otchets";
+    }
+
+    @RequestMapping(value = { "/otchets/{id}/downloadMedia" }, method = RequestMethod.GET)
+    public String downloadMedia(@PathVariable long id, HttpServletResponse response) throws IOException {
+        Otchet otchet = otchetRepository.findById(id).get();
+        Media media = otchet.getMedia();
+        response.setContentType(media.getContentType());
+        response.setContentLength(media.getContent().length);
+        response.setHeader("Content-Disposition","attachment; filename=\"" + media.getName() +"\"");
+
+        FileCopyUtils.copy(media.getContent(), response.getOutputStream());
 
         return "redirect:/otchets";
     }

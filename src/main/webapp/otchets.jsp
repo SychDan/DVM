@@ -30,41 +30,30 @@
     <tr>
         <th>ID</th>
         <th>name</th>
-        <th>Date</th>
         <th>Person</th>
-        <th>cardNumber</th>
-        <th>access</th>
-        <th>admin</th>
-        <th>status</th>
-        <th>otdel</th>
-        <th>doljn</th>
+        <th>date</th>
         <th>Action</th>
     </tr>
     </thead>
 
-    <c:forEach var="person" items="${persons}">
+    <c:forEach var="otchet" items="${otchets}">
         <tr>
-            <td>${person.id}</td>
-            <td>${person.family}</td>
-            <td>${person.firstName}</td>
-            <td>${person.secondName}</td>
-            <td>${person.cardNumber}</td>
-            <td>${person.access}</td>
-            <td>${person.admin}</td>
-            <td>${person.status}</td>
-            <td>${person.otdel}</td>
-            <td>${person.doljn}</td>
+            <td>${otchet.id}</td>
+            <td>${otchet.name}</td>
+            <td>${otchet.person}</td>
+            <td>${otchet.date}</td>
             <td>
-                <spring:url value="/persons/${person.id}/delete" var="deleteUrl" />
-                <spring:url value="/persons/${person.id}/update" var="updateUrl" />
-                <spring:url value="/persons/${person.id}/download" var="downloadUrl" />
+                <spring:url value="/otchets/${otchet.id}/delete" var="deleteUrl" />
+                <spring:url value="/otchets/${otchet.id}/update" var="updateUrl" />
+                <spring:url value="/otchets/${otchet.id}/downloadPhoto" var="downloadPhotoUrl" />
+                <spring:url value="/otchets/${otchet.id}/downloadMedia" var="downloadMediaUrl" />
 
                 <button class="btn btn-primary"
                         onclick="location.href='${updateUrl}'">Update</button>
                 <button class="btn btn-danger"
                         onclick="location.href='${deleteUrl}'">Delete</button>
-                <button class="btn btn-danger"
-                        onclick="location.href='${downloadUrl}'">Download</button>
+                <button class="btn btn-danger" onclick="location.href='${downloadPhotoUrl}'">Download photo</button>
+                <button class="btn btn-danger" onclick="location.href='${downloadMediaUrl}'">Download media</button>
             </td>
         </tr>
     </c:forEach>
