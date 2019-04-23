@@ -13,8 +13,8 @@
 <head>
     <title>Title</title>
     <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/uploadFile.js"></script>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--%>
+<%--    <script src="js/uploadFile.js"></script>--%>
 </head>
 <body>
 <c:choose>
@@ -28,7 +28,7 @@
 <br />
 <spring:url value="/persons" var="actionUrl" />
 <form:form method="post" modelAttribute="personForm" action="${actionUrl}" enctype="multipart/form-data">
-    ${perosnForm.id}
+    ${personForm.id}
     <form:input path="id" type="hidden" id="ID"/>
     <spring:bind path="family">
         <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -112,12 +112,12 @@
         </div>
     </spring:bind>
 
-    <spring:bind path="file">
+    <spring:bind path="photo.file">
         <div class="form-group ${status.error ? 'has-error' : ''}">
             <label class="col-sm-2 control-label">status</label>
             <div class="col-sm-10">
-                <form:input type="file" path="file" id="file" class="form-control input-sm"/>
-                <form:errors path="file" class="control-label" />
+                <form:input type="file" path="photo.file" id="file" class="form-control input-sm"/>
+                <form:errors path="photo.file" class="control-label" />
             </div>
         </div>
     </spring:bind>

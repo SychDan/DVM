@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 /**
@@ -45,16 +46,8 @@ public class Person {
     @Column(length = 11)
     private String pass;
 
-    @Transient
-    @Column(length = 200)
-    private MultipartFile file;
-
-    private String photo;
-
-    @Lob
-    private byte[] content;
-
-    private String contentType;
+    @OneToOne
+    private Photo photo;
 
     @Column(length = 2)
     private int life;
@@ -155,14 +148,6 @@ public class Person {
         this.pass = pass;
     }
 
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
     public int getLife() {
         return life;
     }
@@ -171,27 +156,11 @@ public class Person {
         this.life = life;
     }
 
-    public String getPhoto() {
+    public Photo getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Photo photo) {
         this.photo = photo;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 }

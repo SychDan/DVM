@@ -4,6 +4,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.time.Instant;
 
 /**
@@ -19,6 +20,12 @@ public class Otchet extends AbstractPersistable<Long> {
     private Person person;
 
     private Instant date;
+
+    @OneToOne
+    private Media media;
+
+    @OneToOne
+    private Photo photo;
 
     public String getName() {
         return name;
@@ -42,5 +49,21 @@ public class Otchet extends AbstractPersistable<Long> {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
 }

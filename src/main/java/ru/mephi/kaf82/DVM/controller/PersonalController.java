@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mephi.kaf82.DVM.model.Person;
+import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.repository.PersonRepository;
+import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.util.PersonValidator;
 
 import javax.annotation.Resource;
@@ -23,6 +24,9 @@ import java.io.IOException;
 
 @Controller
 public class PersonalController {
+
+    @Resource
+    private PhotoRepository photoRepository;
 
     @Resource
     private PersonRepository personRepository;
@@ -52,22 +56,27 @@ public class PersonalController {
             } else {
                 redirectAttributes.addFlashAttribute("msg", "Пользователь успешно обновлен");
             }
-            MultipartFile file = person.getFile();
+            Photo photo = person.getPhoto();
             try {
-                person.setContent(file.getBytes());
+                person.getPhoto().setContent(photo.getFile().getBytes());
+                person.getPhoto().setContentType(photo.getFile().getContentType());
+                person.getPhoto().setPhoto(photo.getFile().getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            person.setPhoto(file.getOriginalFilename());
+            photoRepository.save(photo);
+            person.setPhoto(photo);
             personRepository.save(person);
         }
         model.addAttribute("persons", personRepository.findAll());
         return "redirect:/persons";
     }
 
-    @RequestMapping(value = "/persons/add", method = RequestMethod.GET)
-    public String addTerminal(Model model) {
+    @RequestMapping(value = "/othcts/add", method = RequestMethod.GET)
+    public String add(Model model) {
         Person person = new Person();
+        Photo photo = new Photo();
+        person.setPhoto(photo);
         model.addAttribute("personForm", person);
         return "addOrEditPerson";
     }
@@ -90,11 +99,12 @@ public class PersonalController {
     @RequestMapping(value = { "/persons/{id}/download" }, method = RequestMethod.GET)
     public String downloadDocument(@PathVariable long id, HttpServletResponse response) throws IOException {
         Person person = personRepository.findById(id).get();
-        response.setContentType(person.getContentType());
-        response.setContentLength(person.getContent().length);
-        response.setHeader("Content-Disposition","attachment; filename=\"" + person.getPhoto() +"\"");
+        Photo photo = person.getPhoto();
+        response.setContentType(photo.getContentType());
+        response.setContentLength(photo.getContent().length);
+        response.setHeader("Content-Disposition","attachment; filename=\"" + photo.getPhoto() +"\"");
 
-        FileCopyUtils.copy(person.getContent(), response.getOutputStream());
+        FileCopyUtils.copy(photo.getContent(), response.getOutputStream());
 
         return "redirect:/persons";
     }

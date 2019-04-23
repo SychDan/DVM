@@ -6,9 +6,12 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.mephi.kaf82.DVM.model.Person;
 
+import java.util.Arrays;
+
 
 @Service
 public class PersonValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> aClass) {
         return Person.class.equals(aClass);
@@ -27,10 +30,15 @@ public class PersonValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"status","NotEmpty.personForm.status");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"pass","NotEmpty.personForm.pass");
 
-        if(person.getFile()!=null){
-            if (person.getFile().getSize() == 0) {
-                errors.rejectValue("file", "missing.file");
+        if(person.getPhoto().getFile()!=null){
+            if (person.getPhoto().getFile().getSize() == 0) {
+                errors.rejectValue("photo.file", "missing.file");
             }
+        }
+
+        String[] suffix = {".png", ".jpg", ".jpeg"};
+        if (person.getPhoto().getFile() != null && !Arrays.stream(suffix).anyMatch(e -> person.getPhoto().getFile().getOriginalFilename().endsWith(e))) {
+            errors.rejectValue("photo.file", "unsupportedFormat.file");
         }
     }
 }
