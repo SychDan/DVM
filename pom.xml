@@ -135,6 +135,18 @@
             <version>4.2.3.RELEASE</version>
         </dependency>
 
+        <!-- BootStrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-taglib</artifactId>
+            <version>0.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -174,6 +186,27 @@
                         <!--Для полного вывода лога ошибок-->
                         <arg>-Xlint:unchecked</arg>
                     </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- For BootStrap -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+
+                    <webResources>
+                        <resource>
+                            <directory>${basedir}/src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/*.css</include>
+                                <include>**/*.html</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+
                 </configuration>
             </plugin>
 

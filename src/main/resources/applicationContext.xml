@@ -81,6 +81,7 @@
             <ref bean="localeChangeInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
