@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://www.webjars.org/tags" prefix="wj"%>
 <%--
   Created by IntelliJ IDEA.
   User: danny
@@ -11,6 +12,9 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
+    <script type='text/javascript' src='<wj:locate path="jquery.min.js" relativeTo="META-INF/resources"/>'></script>
+    <script type='text/javascript' src='<wj:locate path="js/bootstrap.min.js" relativeTo="META-INF/resources"/>'></script>
 </head>
 <body>
 <button onclick="location.href='/persons'">Справочники</button>

@@ -72,7 +72,7 @@ public class PersonalController {
         return "redirect:/persons";
     }
 
-    @RequestMapping(value = "/othcts/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/persons/add", method = RequestMethod.GET)
     public String add(Model model) {
         Person person = new Person();
         Photo photo = new Photo();

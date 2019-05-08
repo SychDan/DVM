@@ -82,6 +82,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:resources mapping="/resources/**" location="/static/" />
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
