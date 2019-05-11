@@ -13,34 +13,93 @@
 <head>
     <title>Title</title>
     <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
+    <link href='<spring:url value="/resources/css/sidebar.css"/>' rel="stylesheet" />
     <script type='text/javascript' src='<wj:locate path="jquery.min.js" relativeTo="META-INF/resources"/>'></script>
-    <script type='text/javascript' src='<wj:locate path="js/bootstrap.min.js" relativeTo="META-INF/resources"/>'></script>
+    <script type="text/javascript" src='<spring:url value="/resources/js/table.js"/>'></script>
 </head>
 <body>
-<button onclick="location.href='/persons'">Справочники</button>
-<button onclick="location.href='/otchets'">Отчеты</button>
 
-<c:if test="${not empty msg}">
-    <div class="alert alert-${css} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <strong>${msg}</strong>
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right col-xl-2" id="sidebar-wrapper">
+        <div class="sidebar-heading"><a class="nav-link" href="/home">DVM</a></div>
+        <div class="list-group list-group-flush">
+            <c:if test="${not empty msg}">
+                <div class="alert alert-${css} alert-dismissible" role="alert">
+
+
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong>${msg}</strong>
+                </div>
+            </c:if>
+            <spring:url value="/home/add" var="addUrl"/>
+
+            <button onclick="location.href='${addUrl}'" class="btn btn-primary" >Добавить</button>
+            <button id="updateSidebar" class="btn btn-primary" disabled autocomplete = "off">Обновить</button>
+            <button id="deleteSidebar" class="btn btn-danger" disabled autocomplete = "off">Удалить</button>
+            <button id="downloadSidebar" class="btn btn-primary" disabled autocomplete = "off">Скачать</button>
+            <table class="table table-bordered" id="myTableSidebar">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Address</th>
+                    <th>IP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="terminal" items="${terminals}">
+
+                    <tr class="clickable-row" id="row">
+                        <td>${terminal.id}</td>
+                        <td>${terminal.address}</td>
+                        <td>${terminal.ip}</td>
+                    </tr>
+
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
-</c:if>
-<spring:url value="/home/add" var="addUrl"/>
-<button onclick="location.href='${addUrl}'">Добавить</button>
-    <c:forEach var="terminal" items="${terminals}">
+    <!-- /#sidebar-wrapper -->
 
-        <spring:url value="/home/${terminal.id}/delete" var="deleteUrl" />
-        <spring:url value="/home/${terminal.id}/update" var="updateUrl" />
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
 
-        <li>
-            ${terminal.termNumber} ${terminal.address} ${terminal.ip}
-            <button onclick="location.href='${updateUrl}'">Редактировать</button>
-            <button onclick="location.href='${deleteUrl}'">Удалить</button>
-        </li>
-    </c:forEach>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a class="nav-link" href="#">Журнал</a></li>
+                    <li><a class="nav-link" href="/persons">Справочники</a></li>
+                    <li><a class="nav-link" href="/otchets">Отчеты</a></li>
+                    <li><a class="nav-link" href="#">Настройки</a></li>
+                </ul>
+                <ul class="nav navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li><a class="nav-link" href="#">Выход</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+
+            <%--            <div class="collapse navbar-collapse" id="navbarSupportedContent">--%>
+            <%--                            <ul class="nav navbar-nav">--%>
+            <%--                                --%>
+            <%--                            </ul>--%>
+            <%--                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">--%>
+            <%--                    <li class="nav-item active">--%>
+            <%--                        <a class="nav-link" href="#">Выход <span class="sr-only">(current)</span></a>--%>
+            <%--                    </li>--%>
+            <%--                </ul>--%>
+            <%--            </div>--%>
+        </nav>
+
+        <div class="container-fluid">
+
+          <h1>Hello</h1>
+        </div>
+    </div>
+</div>
 </body>
 </html>

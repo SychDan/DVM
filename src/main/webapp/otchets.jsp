@@ -11,6 +11,10 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
+    <link href='<spring:url value="/resources/css/sidebar.css"/>' rel="stylesheet" />
+    <script type='text/javascript' src='<wj:locate path="jquery.min.js" relativeTo="META-INF/resources"/>'></script>
+    <script type="text/javascript" src='<spring:url value="/resources/js/table.js"/>'></script>
 </head>
 <body>
 <button onclick="location.href='/home'">Домашняя страница</button>
@@ -25,7 +29,7 @@
 </c:if>
 <spring:url value="/otchets/add" var="addUrl"/>
 <button onclick="location.href='${addUrl}'">Добавить</button>
-<table>
+<table class="table-bordered table">
     <thead>
     <tr>
         <th>ID</th>

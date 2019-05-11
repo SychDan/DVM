@@ -1,8 +1,11 @@
 $(document).ready(function () {
 
     var id;
-    $('#myTable').on('click', '.clickable-row', function(event) {
+    var url;
+    var idSidebar;
 
+    $('#myTable').on('click', '.clickable-row', function(event) {
+        url = window.location.pathname;
         id = $(this).closest('tr').find('td:first').text();
         $(this).addClass('table-active').siblings().removeClass('table-active');
         $('#update').removeAttr('disabled');
@@ -10,15 +13,35 @@ $(document).ready(function () {
         $('#download').removeAttr('disabled');
     });
 
-    $('#update').click(function () {
-        window.location.replace('/persons/'+id+'/update')
+    $('#myTableSidebar').on('click', '.clickable-row', function(event) {
+        idSidebar = $(this).closest('tr').find('td:first').text();
+        $(this).addClass('table-active').siblings().removeClass('table-active');
+        $('#updateSidebar').removeAttr('disabled');
+        $('#deleteSidebar').removeAttr('disabled');
+        $('#downloadSidebar').removeAttr('disabled');
     });
 
-    $('#delelte').click(function () {
-        window.location.replace('/persons/'+id+'/delete')
+    $('#update').click(function () {
+        window.location.replace(url + '/' + id+'/update')
+    });
+
+    $('#delete').click(function () {
+        window.location.replace(url + '/' +id+'/delete')
     });
 
     $('#download').click(function () {
-        window.location.replace('/persons/'+id+'/download')
+        window.location.replace(url + '/' +id+'/download')
+    });
+
+    $('#updateSidebar').click(function () {
+        window.location.replace('/home/' + idSidebar + '/update')
+    });
+
+    $('#deleteSidebar').click(function () {
+        window.location.replace('/home/' + idSidebar + '/delete')
+    });
+
+    $('#downloadSidebar').click(function () {
+        window.location.replace('/home/'  + idSidebar +'/download')
     });
 });

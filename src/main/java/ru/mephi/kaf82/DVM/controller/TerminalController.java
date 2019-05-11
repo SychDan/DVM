@@ -69,6 +69,7 @@ public class TerminalController {
     public String addTerminal(Model model) {
         Terminal terminal = new Terminal();
         model.addAttribute("terminalForm", terminal);
+        model.addAttribute("terminals", terminalRepository.findAll());
         return "addOrEditTerminal";
     }
 
@@ -76,6 +77,7 @@ public class TerminalController {
     public String update(@PathVariable("id") long id, Model model) {
         Terminal terminal = terminalRepository.findById(id).get();
         model.addAttribute("terminalForm", terminal);
+        model.addAttribute("terminals", terminalRepository.findAll());
         return "addOrEditTerminal";
     }
 

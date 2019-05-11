@@ -16,6 +16,7 @@ import ru.mephi.kaf82.DVM.model.Person;
 import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.repository.PersonRepository;
 import ru.mephi.kaf82.DVM.repository.PhotoRepository;
+import ru.mephi.kaf82.DVM.repository.TerminalRepository;
 import ru.mephi.kaf82.DVM.util.PersonValidator;
 
 import javax.annotation.Resource;
@@ -32,6 +33,9 @@ public class PersonalController {
     private PersonRepository personRepository;
 
     @Resource
+    private TerminalRepository terminalRepository;
+
+    @Resource
     private PersonValidator personValidator;
 
     @InitBinder
@@ -42,6 +46,7 @@ public class PersonalController {
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public String personList(Model model) {
         model.addAttribute("persons", personRepository.findAll());
+        model.addAttribute("terminals", terminalRepository.findAll());
         return "persons";
     }
 
@@ -77,6 +82,7 @@ public class PersonalController {
         Person person = new Person();
         Photo photo = new Photo();
         person.setPhoto(photo);
+        model.addAttribute("terminals", terminalRepository.findAll());
         model.addAttribute("personForm", person);
         return "addOrEditPerson";
     }
@@ -84,6 +90,7 @@ public class PersonalController {
     @RequestMapping(value = "/persons/{id}/update", method = RequestMethod.GET)
     public String update(@PathVariable("id") long id, Model model) {
         Person person = personRepository.findById(id).get();
+        model.addAttribute("terminals", terminalRepository.findAll());
         model.addAttribute("personForm", person);
         return "addOrEditPerson";
     }

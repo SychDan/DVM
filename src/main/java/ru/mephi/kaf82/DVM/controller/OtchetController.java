@@ -19,6 +19,7 @@ import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.OtchetRepository;
 import ru.mephi.kaf82.DVM.repository.PhotoRepository;
+import ru.mephi.kaf82.DVM.repository.TerminalRepository;
 import ru.mephi.kaf82.DVM.util.OtchetValidator;
 
 import javax.annotation.Resource;
@@ -41,6 +42,9 @@ public class OtchetController {
     @Resource
     private MediaRepository mediaRepository;
 
+    @Resource
+    private TerminalRepository terminalRepository;
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(otchetValidator);
@@ -49,6 +53,7 @@ public class OtchetController {
     @RequestMapping(value = "/otchets", method = RequestMethod.GET)
     public String otchetList(Model model) {
         model.addAttribute("otchets", otchetRepository.findAll());
+        model.addAttribute("terminals", terminalRepository.findAll());
         return "otchets";
     }
 
@@ -94,6 +99,7 @@ public class OtchetController {
         otchet.setPhoto(photo);
         otchet.setMedia(media);
         model.addAttribute("otchetForm", otchet);
+        model.addAttribute("terminals", terminalRepository.findAll());
         return "addOrEditOtchet";
     }
 
@@ -101,6 +107,7 @@ public class OtchetController {
     public String update(@PathVariable("id") long id, Model model) {
         Otchet otchet = otchetRepository.findById(id).get();
         model.addAttribute("otchetForm", otchet);
+        model.addAttribute("terminals", terminalRepository.findAll());
         return "addOrEditOtchet";
     }
 
