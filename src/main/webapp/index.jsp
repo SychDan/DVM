@@ -15,7 +15,11 @@
     <script type='text/javascript' src='<wj:locate path="js/bootstrap.min.js" relativeTo="META-INF/resources"/>'></script>
 </head>
 <body>
-Hello ${name}
-<button onclick="location.href='/home'" class="btn btn-success">Войти</button>
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+    <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center">DVM System</h1>
+    <div class="inline-block align-middle">
+        <h2 class="font-weight-normal lead" id="desc"><button onclick="location.href='/home'" class="btn btn-success">Войти</button></h2>
+    </div>
+</div>
 </body>
 </html>

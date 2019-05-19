@@ -9,7 +9,7 @@
 <%@ taglib uri="http://www.webjars.org/tags" prefix="wj"%>
 <html>
 <head>
-    <title>404</title>
+    <title>500</title>
     <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
 </head>
 <body>

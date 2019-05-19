@@ -99,6 +99,7 @@
     </bean>
 
     <!-- Resources -->
+    <import resource="securityContext.xml"/>
     <!-- Loader -->
     <bean class="ru.mephi.kaf82.DVM.DataLoader"/>
 </beans>

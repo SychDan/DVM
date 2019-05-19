@@ -77,7 +77,7 @@
                     <li><a class="nav-link" href="#">Журнал</a></li>
                     <li><a class="nav-link" href="/persons">Справочники</a></li>
                     <li><a class="nav-link" href="/otchets">Отчеты</a></li>
-                    <li><a class="nav-link" href="#">Настройки</a></li>
+                    <li><a class="nav-link" href="/logout">Настройки</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto mt-2 mt-lg-0">
                     <li><a class="nav-link" href="#">Выход</a></li>
