@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: danny
-  Date: 11.05.19
-  Time: 17:42
+  Date: 20.05.19
+  Time: 1:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -101,10 +101,10 @@
                     <a class="nav-link" href="/persons">Справчник сотрудников</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/persons/devices/">Справочник устройств</a>
+                    <a class="nav-link" href="/persons/devices/">Справочник устройств</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/persons/marshruts/">Справочник маршрутов</a>
+                    <a class="nav-link active" href="/persons/marshruts/">Справочник маршрутов</a>
                 </li>
             </ul>
             <br>
@@ -119,7 +119,7 @@
                     <strong>${msg}</strong>
                 </div>
             </c:if>
-            <spring:url value="/persons/devices/add" var="addUrl"/>
+            <spring:url value="/persons/marshruts/add" var="addUrl"/>
 
             <button onclick="location.href='${addUrl}'" class="btn btn-primary" >Добавить</button>
             <button id="update" class="btn btn-primary" disabled autocomplete = "off">Обновить</button>
@@ -128,17 +128,17 @@
                 <thead>
                 <tr>
                     <th style="display: none">id</th>
-                    <th>Номер устройства</th>
-                    <th>Серийный код</th>
+                    <th>Название</th>
+                    <th>Описание</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="device" items="${devices}">
+                <c:forEach var="marshrut" items="${marshruts}">
 
                     <tr class="clickable-row" id="row">
-                        <td style="display: none">${device.id}</td>
-                        <td>${device.invNum}</td>
-                        <td>${device.serNum}</td>
+                        <td style="display: none">${marshrut.id}</td>
+                        <td>${marshrut.name}</td>
+                        <td>${marshrut.description}</td>
                     </tr>
 
                 </c:forEach>

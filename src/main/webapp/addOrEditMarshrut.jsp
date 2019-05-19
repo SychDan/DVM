@@ -1,17 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: danny
-  Date: 11.05.19
-  Time: 17:42
+  Date: 20.05.19
+  Time: 1:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.webjars.org/tags" prefix="wj"%>
 <html>
 <head>
-    <title>Справочник устройств</title>
+    <title>Title</title>
     <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
     <link href='<spring:url value="/resources/css/sidebar.css"/>' rel="stylesheet" />
     <script type='text/javascript' src='<wj:locate path="jquery.min.js" relativeTo="META-INF/resources"/>'></script>
@@ -95,58 +96,59 @@
         </nav>
 
         <div class="container-fluid">
+            <c:choose>
+                <c:when test="${marshrutForm['id'] eq 0}">
+                    <h1>Добавление устройства</h1>
+                </c:when>
+                <c:otherwise>
+                    <h1>Редактирование устройства</h1>
+                </c:otherwise>
+            </c:choose>
+            <br />
+            <spring:url value="/persons/marshruts/" var="actionUrl" />
+            <form:form method="post" modelAttribute="marshrutForm" action="${actionUrl}" enctype="multipart/form-data">
+                ${marshrutForm.id}
+                <form:input path="id" type="hidden" id="ID"/>
+                <spring:bind path="name">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <label class="col-sm-2 control-label">Название</label>
+                        <div class="col-sm-10">
+                            <form:input path="name" type="text" class="form-control"
+                                        id="camCode" />
+                            <form:errors path="name" class="control-label" />
+                        </div>
+                    </div>
+                </spring:bind>
+                <spring:bind path="description">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <label class="col-sm-2 control-label">Описание</label>
+                        <div class="col-sm-10">
+                            <form:input path="description" type="text" class="form-control"
+                                        id="serNum"  />
+                            <form:errors path="description" class="control-label" />
+                        </div>
+                    </div>
+                </spring:bind>
 
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" href="/persons">Справчник сотрудников</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/persons/devices/">Справочник устройств</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/persons/marshruts/">Справочник маршрутов</a>
-                </li>
-            </ul>
-            <br>
-            <c:if test="${not empty msg}">
-                <div class="alert alert-${css} alert-dismissible" role="alert">
-
-
-                    <button type="button" class="close" data-dismiss="alert"
-                            aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <strong>${msg}</strong>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <c:choose>
+                            <c:when test="${marshrutForm['id'] eq 0}">
+                                <button type="submit" class="btn-lg btn-primary pull-right">Добавить
+                                </button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="submit" class="btn-lg btn-primary pull-right">Обновить
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
                 </div>
-            </c:if>
-            <spring:url value="/persons/devices/add" var="addUrl"/>
-
-            <button onclick="location.href='${addUrl}'" class="btn btn-primary" >Добавить</button>
-            <button id="update" class="btn btn-primary" disabled autocomplete = "off">Обновить</button>
-            <button id="delete" class="btn btn-danger" disabled autocomplete = "off">Удалить</button>
-            <table class="table table-bordered" id="myTable">
-                <thead>
-                <tr>
-                    <th style="display: none">id</th>
-                    <th>Номер устройства</th>
-                    <th>Серийный код</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="device" items="${devices}">
-
-                    <tr class="clickable-row" id="row">
-                        <td style="display: none">${device.id}</td>
-                        <td>${device.invNum}</td>
-                        <td>${device.serNum}</td>
-                    </tr>
-
-                </c:forEach>
-                </tbody>
-            </table>
-
+            </form:form>
+            <a href="/persons/marshruts/"><button class="btn-lg btn-primary pull-right">Отмена</button></a>
         </div>
     </div>
 </div>
 </body>
 </html>
+

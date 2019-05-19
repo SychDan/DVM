@@ -107,7 +107,7 @@
                     <a class="nav-link" href="/persons/devices/">Справочник устройств</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/persons/marchruts">Справочник маршрутов</a>
+                    <a class="nav-link" href="/persons/marshruts/">Справочник маршрутов</a>
                 </li>
             </ul>
             <br>
