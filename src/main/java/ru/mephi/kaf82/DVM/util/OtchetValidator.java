@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 @Service
 public class OtchetValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> aClass) {
         return Otchet.class.equals(aClass);

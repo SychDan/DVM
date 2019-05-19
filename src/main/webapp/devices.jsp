@@ -1,19 +1,17 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: danny
-  Date: 14.04.19
-  Time: 1:46
+  Date: 11.05.19
+  Time: 17:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://www.webjars.org/tags" prefix="wj"%>
-
-<html lang="ru">
+<html>
 <head>
-    <title>Title</title>
+    <title>Справочник устройств</title>
     <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
     <link href='<spring:url value="/resources/css/sidebar.css"/>' rel="stylesheet" />
     <script type='text/javascript' src='<wj:locate path="jquery.min.js" relativeTo="META-INF/resources"/>'></script>
@@ -97,6 +95,19 @@
         </nav>
 
         <div class="container-fluid">
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="/persons">Справчник сотрудников</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/persons/devices">Справочник устройств</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/persons/marchruts">Справочник маршрутов</a>
+                </li>
+            </ul>
+            <br>
             <c:if test="${not empty msg}">
                 <div class="alert alert-${css} alert-dismissible" role="alert">
 
@@ -108,80 +119,34 @@
                     <strong>${msg}</strong>
                 </div>
             </c:if>
-            <spring:url value="/home/add" var="addUrl"/>
-            <c:choose>
-                <c:when test="${terminalForm['id'] eq 0}">
-                    <h1>Добавление терминала</h1>
-                </c:when>
-                <c:otherwise>
-                    <h1>Редактирование терминала</h1>
-                </c:otherwise>
-            </c:choose>
-            <br />
-            <spring:url value="/home" var="actionUrl"/>
-            <form:form method="post" modelAttribute="terminalForm" action="${actionUrl}">
-                ${terminalForm.id}
-                <form:input path="id" type="hidden" id="ID"/>
-                <spring:bind path="nameGroup">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <label class="col-sm-2 control-label">nameGroup</label>
-                        <div class="col-sm-10">
-                            <form:input path="nameGroup" type="text" class="form-control"
-                                        id="nameGroup" placeholder="nameGroup" />
-                            <form:errors path="nameGroup" class="control-label" />
-                        </div>
-                    </div>
-                </spring:bind>
-                <spring:bind path="termNumber">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <label class="col-sm-2 control-label">termNumber</label>
-                        <div class="col-sm-10">
-                            <form:input path="termNumber" type="text" class="form-control"
-                                        id="termNumber" placeholder="termNumber" />
-                            <form:errors path="termNumber" class="control-label" />
-                        </div>
-                    </div>
-                </spring:bind>
-                <spring:bind path="address">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <label class="col-sm-2 control-label">termNumber</label>
-                        <div class="col-sm-10">
-                            <form:input path="address" type="text" class="form-control"
-                                        id="address" placeholder="address" />
-                            <form:errors path="address" class="control-label" />
-                        </div>
-                    </div>
-                </spring:bind>
-                <spring:bind path="ip">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <label class="col-sm-2 control-label">termNumber</label>
-                        <div class="col-sm-10">
-                            <form:input path="ip" type="text" class="form-control"
-                                        id="ip" placeholder="ip" />
-                            <form:errors path="ip" class="control-label" />
-                        </div>
-                    </div>
-                </spring:bind>
+            <spring:url value="/persons/devices/add" var="addUrl"/>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <c:choose>
-                            <c:when test="${terminalForm['id'] eq 0}">
-                                <button type="submit" class="btn-lg btn-primary pull-right">Добавить
-                                </button>
-                            </c:when>
-                            <c:otherwise>
-                                <button type="submit" class="btn-lg btn-primary pull-right">Обновить
-                                </button>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-            </form:form>
-            <a href="/home"><button class="btn-lg btn-primary pull-right">Отмена</button></a>
+            <button onclick="location.href='${addUrl}'" class="btn btn-primary" >Добавить</button>
+            <button id="update" class="btn btn-primary" disabled autocomplete = "off">Обновить</button>
+            <button id="delete" class="btn btn-danger" disabled autocomplete = "off">Удалить</button>
+            <table class="table table-bordered" id="myTable">
+                <thead>
+                <tr>
+                    <th style="display: none">id</th>
+                    <th>Номер устройства</th>
+                    <th>Серийный код</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="device" items="${devices}">
+
+                    <tr class="clickable-row" id="row">
+                        <td style="display: none">${device.id}</td>
+                        <td>${device.invNum}</td>
+                        <td>${device.serNum}</td>
+                    </tr>
+
+                </c:forEach>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -87,6 +87,7 @@ public class PersonalController {
         return "addOrEditPerson";
     }
 
+
     @RequestMapping(value = "/persons/{id}/update", method = RequestMethod.GET)
     public String update(@PathVariable("id") long id, Model model) {
         Person person = personRepository.findById(id).get();

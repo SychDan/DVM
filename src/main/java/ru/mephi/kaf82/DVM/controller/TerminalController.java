@@ -57,7 +57,7 @@ public class TerminalController {
             if (terminal.getId() == 0) {
                 redirectAttributes.addFlashAttribute("msg" ,"Терминал успешно добавлен");
             } else {
-                redirectAttributes.addFlashAttribute("msg","Терминал успешно обновлен");
+                redirectAttributes.addFlashAttribute("msgTerminal","Терминал успешно обновлен");
             }
             terminalRepository.save(terminal);
         }
@@ -85,7 +85,7 @@ public class TerminalController {
     public String delete(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
         terminalRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("css", "success");
-        redirectAttributes.addFlashAttribute("msg", "Терминал успешно удален!");
+        redirectAttributes.addFlashAttribute("msgTerminal", "Терминал успешно удален!");
         return "redirect:/home";
 
     }

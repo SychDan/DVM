@@ -99,6 +99,18 @@
         </nav>
 
         <div class="container-fluid">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/persons">Справчник сотрудников</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/persons/devices/">Справочник устройств</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/persons/marchruts">Справочник маршрутов</a>
+                </li>
+            </ul>
+            <br>
             <c:if test="${not empty msg}">
                 <div class="alert alert-${css} alert-dismissible" role="alert">
 

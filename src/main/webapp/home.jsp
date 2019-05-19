@@ -25,7 +25,7 @@
     <div class="bg-light border-right col-xl-2" id="sidebar-wrapper">
         <div class="sidebar-heading"><a class="nav-link" href="/home">DVM</a></div>
         <div class="list-group list-group-flush">
-            <c:if test="${not empty msg}">
+            <c:if test="${not empty msgTerminal}">
                 <div class="alert alert-${css} alert-dismissible" role="alert">
 
 
@@ -33,7 +33,7 @@
                             aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <strong>${msg}</strong>
+                    <strong>${msgTerminal}</strong>
                 </div>
             </c:if>
             <spring:url value="/home/add" var="addUrl"/>
