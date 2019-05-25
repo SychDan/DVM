@@ -98,6 +98,8 @@
         <property name="maxUploadSize" value="50000000"/>
     </bean>
 
+    <!-- Services -->
+    <bean name="authService" class="ru.mephi.kaf82.DVM.service.AuthService"/>
     <!-- Resources -->
     <import resource="securityContext.xml"/>
     <!-- Loader -->

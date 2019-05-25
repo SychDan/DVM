@@ -121,25 +121,20 @@
                     </div>
                 </spring:bind>
 
-                <spring:bind path="photo.file">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label class="col-sm-2 control-label">Photo</label>
                         <div class="col-sm-10">
-                            <form:input type="file" path="photo.file" id="file" class="form-control input-sm"/>
-                            <form:errors path="photo.file" class="control-label" />
+                            <input type="file" id="file" class="form-control input-sm"  multiple="multiple"/>
                         </div>
                     </div>
-                </spring:bind>
 
-                <spring:bind path="media.file">
+
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label class="col-sm-2 control-label">Media</label>
                         <div class="col-sm-10">
-                            <form:input type="file" path="media.file" id="file" class="form-control input-sm"/>
-                            <form:errors path="media.file" class="control-label" />
+                            <input type="file" class="form-control input-sm"  multiple="multiple"/>
                         </div>
                     </div>
-                </spring:bind>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">

@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Vakobo
@@ -29,11 +32,11 @@ public class Otchet {
 
     private Instant date;
 
-    @OneToOne
-    private Media media;
+    @OneToMany
+    private List<Media> media = new ArrayList<>();
 
-    @OneToOne
-    private Photo photo;
+    @OneToMany
+    private List<Photo> photo = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -67,19 +70,19 @@ public class Otchet {
         this.date = date;
     }
 
-    public Media getMedia() {
+    public List<Media> getMedia() {
         return media;
     }
 
-    public void setMedia(Media media) {
+    public void setMedia(List<Media> media) {
         this.media = media;
     }
 
-    public Photo getPhoto() {
+    public List<Photo> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Photo photo) {
+    public void setPhoto(List<Photo> photo) {
         this.photo = photo;
     }
 }

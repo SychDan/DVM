@@ -20,6 +20,7 @@ import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.OtchetRepository;
 import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.repository.TerminalRepository;
+import ru.mephi.kaf82.DVM.service.AuthService;
 import ru.mephi.kaf82.DVM.util.OtchetValidator;
 
 import javax.annotation.Resource;
@@ -45,6 +46,9 @@ public class OtchetController {
     @Resource
     private TerminalRepository terminalRepository;
 
+    @Resource
+    private AuthService authService;
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(otchetValidator);
@@ -68,22 +72,30 @@ public class OtchetController {
             } else {
                 redirectAttributes.addFlashAttribute("msg", "Отчет успешно обновлен");
             }
-            MultipartFile photoFile = otchet.getPhoto().getFile();
-            MultipartFile mediaFile = otchet.getMedia().getFile();
-            try {
-                otchet.getPhoto().setContent(photoFile.getBytes());
-                otchet.getPhoto().setContentType(photoFile.getContentType());
-                otchet.getPhoto().setPhoto(photoFile.getOriginalFilename());
-                otchet.getMedia().setContent(mediaFile.getBytes());
-                otchet.getMedia().setContentType(mediaFile.getContentType());
-                otchet.getMedia().setName(mediaFile.getOriginalFilename());
-            } catch (IOException e) {
-                e.printStackTrace();
+            for (Photo photo : otchet.getPhoto()) {
+                MultipartFile photoFile = photo.getFile();
+                try {
+                    photo.setContent(photoFile.getBytes());
+                    photo.setContentType(photoFile.getContentType());
+                    photo.setPhoto(photoFile.getOriginalFilename());
+                    photoRepository.save(photo);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            for (Media media : otchet.getMedia()) {
+                MultipartFile mediaFile = media.getFile();
+                try {
+                    media.setContent(mediaFile.getBytes());
+                    media.setContentType(mediaFile.getContentType());
+                    media.setName(mediaFile.getOriginalFilename());
+                    mediaRepository.save(media);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            otchet.setPerson(authService.getLoginedUser());
             otchet.setDate(Instant.now());
-            mediaRepository.save(otchet.getMedia());
-            photoRepository.save(otchet.getPhoto());
-            otchet.setPhoto(otchet.getPhoto());
             otchetRepository.save(otchet);
         }
         model.addAttribute("otchets", otchetRepository.findAll());
@@ -96,8 +108,6 @@ public class OtchetController {
         Photo photo = new Photo();
         Media media = new Media();
         otchet.setDate(Instant.now());
-        otchet.setPhoto(photo);
-        otchet.setMedia(media);
         model.addAttribute("otchetForm", otchet);
         model.addAttribute("terminals", terminalRepository.findAll());
         return "addOrEditOtchet";
@@ -122,12 +132,12 @@ public class OtchetController {
     @RequestMapping(value = { "/otchets/{id}/downloadPhoto" }, method = RequestMethod.GET)
     public String downloadPhoto(@PathVariable long id, HttpServletResponse response) throws IOException {
         Otchet otchet = otchetRepository.findById(id).get();
-        Photo photo = otchet.getPhoto();
-        response.setContentType(photo.getContentType());
-        response.setContentLength(photo.getContent().length);
-        response.setHeader("Content-Disposition","attachment; filename=\"" + photo.getPhoto() +"\"");
-
-        FileCopyUtils.copy(photo.getContent(), response.getOutputStream());
+//        Photo photo = otchet.getPhoto();
+//        response.setContentType(photo.getContentType());
+//        response.setContentLength(photo.getContent().length);
+//        response.setHeader("Content-Disposition","attachment; filename=\"" + photo.getPhoto() +"\"");
+//
+//        FileCopyUtils.copy(photo.getContent(), response.getOutputStream());
 
         return "redirect:/otchets";
     }
@@ -135,12 +145,12 @@ public class OtchetController {
     @RequestMapping(value = { "/otchets/{id}/downloadMedia" }, method = RequestMethod.GET)
     public String downloadMedia(@PathVariable long id, HttpServletResponse response) throws IOException {
         Otchet otchet = otchetRepository.findById(id).get();
-        Media media = otchet.getMedia();
-        response.setContentType(media.getContentType());
-        response.setContentLength(media.getContent().length);
-        response.setHeader("Content-Disposition","attachment; filename=\"" + media.getName() +"\"");
-
-        FileCopyUtils.copy(media.getContent(), response.getOutputStream());
+//        Media media = otchet.getMedia();
+//        response.setContentType(media.getContentType());
+//        response.setContentLength(media.getContent().length);
+//        response.setHeader("Content-Disposition","attachment; filename=\"" + media.getName() +"\"");
+//
+//        FileCopyUtils.copy(media.getContent(), response.getOutputStream());
 
         return "redirect:/otchets";
     }

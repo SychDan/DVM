@@ -38,6 +38,7 @@ public class DataLoader implements InitializingBean {
             Person person = new Person();
             person.setFirstName("John");
             person.setSecondName("Doe");
+            person.setCardNumber("03324");
             personRepository.save(person);
         }
     }

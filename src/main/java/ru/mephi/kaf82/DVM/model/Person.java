@@ -1,6 +1,7 @@
 package ru.mephi.kaf82.DVM.model;
 
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
@@ -31,6 +32,7 @@ public class Person {
 
     private int employeeId;
 
+    @Column(unique = true)
     private String cardNumber;
 
     private byte access;
@@ -162,5 +164,10 @@ public class Person {
 
     public void setPhoto(Photo photo) {
         this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + secondName;
     }
 }

@@ -22,26 +22,26 @@ public class OtchetValidator implements Validator {
         Otchet otchet = (Otchet) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","NotEmpty.otchetForm.name");
 
-        if(otchet.getMedia().getFile()!=null){
-            if (otchet.getMedia().getFile().getSize() == 0) {
-                errors.rejectValue("media.file", "missing.media");
-            }
-        }
-
-        if(otchet.getPhoto().getFile()!=null){
-            if (otchet.getPhoto().getFile().getSize() == 0) {
-                errors.rejectValue("photo.file", "missing.file");
-            }
-        }
-
-        String[] suffixPhoto = {".png", ".jpg", ".jpeg"};
-        if (otchet.getPhoto().getFile() != null && !Arrays.stream(suffixPhoto).anyMatch(e -> otchet.getPhoto().getFile().getOriginalFilename().endsWith(e))) {
-            errors.rejectValue("photo.file", "unsupportedFormat.file");
-        }
-
-        String[] suffixMedia = {".mp4", ".avi", ".mkv"};
-        if (otchet.getPhoto().getFile() != null && !Arrays.stream(suffixMedia).anyMatch(e -> otchet.getMedia().getFile().getOriginalFilename().endsWith(e))) {
-            errors.rejectValue("media.file", "unsupportedFormat.file");
-        }
+//        if(otchet.getMedia().getFile()!=null && otchet.getId() == 0){
+//            if (otchet.getMedia().getFile().getSize() == 0) {
+//                errors.rejectValue("media.file", "missing.media");
+//            }
+//        }
+//
+//        if(otchet.getPhoto().getFile()!=null && otchet.getId() == 0){
+//            if (otchet.getPhoto().getFile().getSize() == 0) {
+//                errors.rejectValue("photo.file", "missing.file");
+//            }
+//        }
+//
+//        String[] suffixPhoto = {".png", ".jpg", ".jpeg"};
+//        if (otchet.getPhoto().getFile() != null && !Arrays.stream(suffixPhoto).anyMatch(e -> otchet.getPhoto().getFile().getOriginalFilename().endsWith(e))) {
+//            errors.rejectValue("photo.file", "unsupportedFormat.file");
+//        }
+//
+//        String[] suffixMedia = {".mp4", ".avi", ".mkv"};
+//        if (otchet.getPhoto().getFile() != null && !Arrays.stream(suffixMedia).anyMatch(e -> otchet.getMedia().getFile().getOriginalFilename().endsWith(e))) {
+//            errors.rejectValue("media.file", "unsupportedFormat.file");
+//        }
     }
 }

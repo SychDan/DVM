@@ -5,12 +5,17 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.mephi.kaf82.DVM.model.Person;
+import ru.mephi.kaf82.DVM.repository.PersonRepository;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 
 @Service
 public class PersonValidator implements Validator {
+
+    @Resource
+    private PersonRepository personRepository;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -30,7 +35,11 @@ public class PersonValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"status","NotEmpty.personForm.status");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"pass","NotEmpty.personForm.pass");
 
-        if(person.getPhoto().getFile()!=null){
+        if (personRepository.findByCardNumber(person.getCardNumber()) != null) {
+            errors.rejectValue("cardNumber", "Duplicate.personForm.cardNumber");
+        }
+
+        if(person.getPhoto().getFile()!=null && person.getId() == 0){
             if (person.getPhoto().getFile().getSize() == 0) {
                 errors.rejectValue("photo.file", "missing.file");
             }
