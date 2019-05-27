@@ -2,22 +2,21 @@ package ru.mephi.kaf82.DVM.model;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.commons.codec.binary.Base64;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import java.io.UnsupportedEncodingException;
 
 @Entity
-public class Photo extends AbstractPersistable<Long> {
+public class File extends AbstractPersistable<Long> {
 
     @Transient
     @Column(length = 200)
     private MultipartFile file;
 
-    private String photo;
+    private String name;
 
     @Lob
     private byte[] content;
@@ -35,12 +34,12 @@ public class Photo extends AbstractPersistable<Long> {
         this.file = file;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getName() {
+        return name;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public byte[] getContent() {

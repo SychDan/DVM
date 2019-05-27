@@ -74,7 +74,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a class="nav-link" href="#">Журнал</a></li>
+                    <li><a class="nav-link" href="/journals">Журнал</a></li>
                     <li><a class="nav-link" href="/persons">Справочники</a></li>
                     <li><a class="nav-link" href="/otchets">Отчеты</a></li>
                     <li><a class="nav-link" href="/logout">Настройки</a></li>
@@ -114,9 +114,17 @@
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label class="col-sm-2 control-label">name</label>
                         <div class="col-sm-10">
-                            <form:input path="name" type="text" class="form-control"
-                                        id="firstName" placeholder="name" />
-                            <form:errors path="name" class="control-label" />
+                            <c:choose>
+                                <c:when test="${otchetForm['id'] eq 0}">
+                                    <form:input path="name" type="text" class="form-control"
+                                                id="firstName" placeholder="name" />
+                                    <form:errors path="name" class="control-label" />
+                                </c:when>
+                                <c:otherwise>
+                                    <form:input path="name" type="text" id="ID" disabled="true"/>
+                                </c:otherwise>
+                            </c:choose>
+
                         </div>
                     </div>
                 </spring:bind>

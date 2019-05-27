@@ -1,25 +1,24 @@
 package ru.mephi.kaf82.DVM.model;
 
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Vakobo
  */
 
 @Entity
-public class Entry {
-
-    @Id
-    @GeneratedValue
-    @Nullable
-    private int en_id;
+public class Entry extends AbstractPersistable<Long> {
 
     @ManyToOne
     private Person person;
@@ -30,19 +29,22 @@ public class Entry {
     @ManyToOne
     private Marshrut marshrut;
 
+    @ManyToOne
+    private Media media;
+
+    @OneToMany
+    private List<Media> mediaList = new ArrayList<>();
+
+    @OneToMany
+    private List<Photo> photos = new ArrayList<>();
+
+    @OneToMany
+    private List<File> logs = new ArrayList<>();
+
     private Instant dateOfEntry;
 
-    private int id;
 
     private int life;
-
-    public int getEn_id() {
-        return en_id;
-    }
-
-    public void setEn_id(@Nullable int en_id) {
-        this.en_id = en_id;
-    }
 
     public Person getPerson() {
         return person;
@@ -76,19 +78,43 @@ public class Entry {
         this.dateOfEntry = dateOfEntry;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getLife() {
         return life;
     }
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public List<Media> getMediaList() {
+        return mediaList;
+    }
+
+    public void setMediaList(List<Media> mediaList) {
+        this.mediaList = mediaList;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
+    }
+
+    public List<File> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(List<File> logs) {
+        this.logs = logs;
     }
 }

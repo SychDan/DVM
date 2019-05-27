@@ -6,8 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
  * Created by Vakobo
@@ -48,10 +50,15 @@ public class Media extends AbstractPersistable<Long> {
 
     private String name;
 
+    private Instant date;
+
     @Lob
     private byte[] content;
 
     private String contentType;
+
+    @ManyToOne
+    private Entry entry;
 
     public int getIdJournal() {
         return idJournal;
@@ -155,5 +162,21 @@ public class Media extends AbstractPersistable<Long> {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
     }
 }
