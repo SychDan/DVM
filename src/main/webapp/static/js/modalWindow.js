@@ -16,7 +16,7 @@ $(document).ready(function () {
     $('#videoTable').on('click', '.clickable-row', function(event) {
         url = window.location.pathname;
         type="video";
-        id = $(this).closest('tr').find('td:first').text();
+        id = $(this).closest('tr').find('td:first').text()
         $(this).addClass('table-active').siblings().removeClass('table-active');
         $('#showModal').removeAttr('disabled');
     });

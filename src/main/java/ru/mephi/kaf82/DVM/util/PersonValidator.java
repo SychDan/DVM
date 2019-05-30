@@ -35,9 +35,9 @@ public class PersonValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"status","NotEmpty.personForm.status");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"pass","NotEmpty.personForm.pass");
 
-        if (personRepository.findByCardNumber(person.getCardNumber()) != null) {
-            errors.rejectValue("cardNumber", "Duplicate.personForm.cardNumber");
-        }
+//        if (personRepository.findByCardNumber(person.getCardNumber()) != null) {
+//            errors.rejectValue("cardNumber", "Duplicate.personForm.cardNumber");
+//        }
 
         if(person.getPhoto().getFile()!=null && person.getId() == 0){
             if (person.getPhoto().getFile().getSize() == 0) {

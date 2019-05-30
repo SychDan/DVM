@@ -30,7 +30,7 @@ public class Entry extends AbstractPersistable<Long> {
     private Marshrut marshrut;
 
     @ManyToOne
-    private Media media;
+    private File media;
 
     @OneToMany
     private List<Media> mediaList = new ArrayList<>();
@@ -86,11 +86,11 @@ public class Entry extends AbstractPersistable<Long> {
         this.life = life;
     }
 
-    public Media getMedia() {
+    public File getMedia() {
         return media;
     }
 
-    public void setMedia(Media media) {
+    public void setMedia(File media) {
         this.media = media;
     }
 

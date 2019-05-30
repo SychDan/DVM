@@ -33,10 +33,10 @@ public class Otchet {
     private Instant date;
 
     @OneToMany
-    private List<Media> media = new ArrayList<>();
+    private List<File> media = new ArrayList<>();
 
     @OneToMany
-    private List<Photo> photo = new ArrayList<>();
+    private List<File> photo = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -70,19 +70,19 @@ public class Otchet {
         this.date = date;
     }
 
-    public List<Media> getMedia() {
+    public List<File> getMedia() {
         return media;
     }
 
-    public void setMedia(List<Media> media) {
+    public void setMedia(List<File> media) {
         this.media = media;
     }
 
-    public List<Photo> getPhoto() {
+    public List<File> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(List<Photo> photo) {
+    public void setPhoto(List<File> photo) {
         this.photo = photo;
     }
 }

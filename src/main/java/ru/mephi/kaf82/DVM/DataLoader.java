@@ -15,14 +15,17 @@ import ru.mephi.kaf82.DVM.model.Media;
 import ru.mephi.kaf82.DVM.model.Person;
 import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.model.Terminal;
+import ru.mephi.kaf82.DVM.model.Type;
 import ru.mephi.kaf82.DVM.repository.CameraRepository;
 import ru.mephi.kaf82.DVM.repository.EntryRepository;
-import ru.mephi.kaf82.DVM.repository.FIleRepository;
+import ru.mephi.kaf82.DVM.repository.FileRepository;
 import ru.mephi.kaf82.DVM.repository.MarshrutRepository;
 import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.PersonRepository;
 import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.repository.TerminalRepository;
+import ru.mephi.kaf82.DVM.util.FileUtil;
+import ru.mephi.kaf82.DVM.util.HashCalculator;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -63,7 +66,7 @@ public class DataLoader implements InitializingBean {
     private PhotoRepository photoRepository;
 
     @Resource
-    private FIleRepository fIleRepository;
+    private FileRepository fileRepository;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -104,27 +107,23 @@ public class DataLoader implements InitializingBean {
     protected void createMedia() {
         if (mediaRepository.count() == 0) {
             for (int i=0; i<5; i++) {
-                Media media = new Media();
-                Path path = Paths.get("/home/danny/Downloads/Rick_Astley_Never_Gonna_Give_You_Up (online-video-cutter.com).mp4");
-                String name = "file.txt";
-                String originalFileName = "Rick_Astley_Never_Gonna_Give_You_Up.mp4";
-                String contentType = "text/plain";
-                byte[] content = null;
                 try {
-                    content = Files.readAllBytes(path);
-                } catch (final IOException e) {
-                    LOG.error("Ошибка во время загрузки файла");
+                    File media = new File();
+                    Path path = Paths.get("/home/danny/Downloads/Rick_Astley_Never_Gonna_Give_You_Up (online-video-cutter.com).mp4");
+                    String name = path.getFileName().toString();
+                    String hash = HashCalculator.getSHA256String(Files.readAllBytes(path));
+                    byte[] fileData = Files.readAllBytes(path);
+                    if (fileRepository.countByHash(hash) == 0) {
+                        FileUtil.saveFile(hash, fileData);
+                    }
+                    media.setName(name);
+                    media.setHash(hash);
+                    media.setType(Type.MEDIA);
+                    media.setDate(Instant.now());
+                    fileRepository.save(media);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
-                media.setContentType(result.getContentType());
-                try {
-                    media.setContent(result.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                media.setName(result.getName());
-                media.setSizeFound(BigInteger.valueOf(result.getSize()));
-                mediaRepository.save(media);
             }
         }
     }
@@ -133,52 +132,46 @@ public class DataLoader implements InitializingBean {
     protected void createPhoto() {
         if (photoRepository.count() == 0) {
             for (int i=0; i<2; i++) {
-                Photo photo = new Photo();
-                Path path = Paths.get("/home/danny/Pictures/Wall/37669442555_6927a3d2df_o.jpg");
-                String name = "photo.jpg";
-                String originalFileName = "photo.jpg";
-                String contentType = "text/plain";
-                byte[] content = null;
                 try {
-                    content = Files.readAllBytes(path);
-                } catch (final IOException e) {
-                    LOG.error("Ошибка во время загрузки файла");
+                    File photo = new File();
+                    Path path = Paths.get("/home/danny/Pictures/Wall/37669442555_6927a3d2df_o.jpg");
+                    String name = path.getFileName().toString();
+                    String hash = HashCalculator.getSHA256String(Files.readAllBytes(path));
+                    byte[] fileData = Files.readAllBytes(path);
+                    if (fileRepository.countByHash(hash) == 0) {
+                        FileUtil.saveFile(hash, fileData);
+                    }
+                    photo.setName(name);
+                    photo.setHash(hash);
+                    photo.setType(Type.IMAGE);
+                    photo.setDate(Instant.now());
+                    fileRepository.save(photo);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
-                photo.setContentType(result.getContentType());
-                try {
-                    photo.setContent(result.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                photo.setPhoto("photo.jpg");
-                photoRepository.save(photo);
             }
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     protected void createFile() {
-        File file = new File();
-        Path path = Paths.get("/home/danny/Downloads.log.txt");
-        String name = "file.txt";
-        String originalFileName = "log.txt";
-        String contentType = "text/plain";
-        byte[] content = null;
         try {
-            content = Files.readAllBytes(path);
-        } catch (final IOException e) {
-            LOG.error("Ошибка во время загрузки файла");
+            File file = new File();
+            Path path = Paths.get("/home/danny/Downloads/log.txt");
+            String name = path.getFileName().toString();
+            String hash = HashCalculator.getSHA256String(Files.readAllBytes(path));
+            byte[] fileData = Files.readAllBytes(path);
+            if (fileRepository.countByHash(hash) == 0) {
+                FileUtil.saveFile(hash, fileData);
+            }
+            file.setName(name);
+            file.setHash(hash);
+            file.setType(Type.LOG);
+            file.setDate(Instant.now());
+            fileRepository.save(file);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
-        file.setContentType(result.getContentType());
-        try {
-            file.setContent(result.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        file.setName("log.txt");
-        fIleRepository.save(file);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -208,24 +201,21 @@ public class DataLoader implements InitializingBean {
             Entry entry = new Entry();
             entry.setPerson(personRepository.findByCardNumber("03324"));
             entry.setDateOfEntry(Instant.now());
-            entry.setMedia(((List<Media>)mediaRepository.findAll()).get(0));
+            entry.setMedia(fileRepository.findByType(Type.MEDIA).get(0));
             entry.setMarshrut(((List<Marshrut>)marshrutRepository.findAll()).get(0));
             entry.setCamera(((List<Camera>)cameraRepository.findAll()).get(0));
-            entry.getMediaList().addAll((Collection<? extends Media>) mediaRepository.findAll());
-            entry.getPhotos().addAll((List<Photo>)photoRepository.findAll());
-            entry.getLogs().addAll((List<File>) fIleRepository.findAll());
             entryRepository.save(entry);
-            for (Media media : mediaRepository.findAll()) {
+            for (File media : fileRepository.findByType(Type.MEDIA)) {
                 media.setEntry(entry);
-                mediaRepository.save(media);
+                fileRepository.save(media);
             }
-            for (Photo photo : photoRepository.findAll()) {
+            for (File photo : fileRepository.findByType(Type.IMAGE)) {
                 photo.setEntry(entry);
-                photoRepository.save(photo);
+                fileRepository.save(photo);
             }
-            for (File file : fIleRepository.findAll()) {
-                file.setEntry(entry);
-                fIleRepository.save(file);
+            for (File log : fileRepository.findByType(Type.LOG)) {
+                log.setEntry(entry);
+                fileRepository.save(log);
             }
         }
     }

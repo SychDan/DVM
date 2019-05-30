@@ -99,6 +99,8 @@
 
             <H1>Сотрудник: ${person}</H1>
             <br>
+            <button mode="button" class="btn btn-primary showModal" data-toggle="modal"
+                    data-target="#exampleModal" disabled id="showModal">Показать данные</button>
             <spring:url value="/journals/${entry.id}/showData/createOtchet" var="actionUrl"/>
             <form action="${actionUrl}" method="post">
                 <input type="hidden" value="${entry.id}">
@@ -140,7 +142,7 @@
 
                             <tr class="clickable-row" id="row">
                                 <td style="display: none">${photo.id}</td>
-                                <td>${photo.photo}</td>
+                                <td>${photo.name}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -129,7 +129,7 @@
                                     <span>Нет</span>
                                 </c:when>
                                 <c:otherwise>
-                                    ${journal.media.sizeFound}
+                                    ${journal.media}
                                 </c:otherwise>
                             </c:choose>
                         </td>

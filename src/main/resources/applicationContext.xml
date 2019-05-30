@@ -17,6 +17,7 @@
             <list>
                 <value>classpath:datasource.properties</value>
                 <value>classpath:hibernate.properties</value>
+                <value>classpath:profile.properties</value>
             </list>
         </property>
     </bean>

@@ -49,7 +49,7 @@ public class Person {
     private String pass;
 
     @OneToOne
-    private Photo photo;
+    private File photo;
 
     @Column(length = 2)
     private int life;
@@ -158,11 +158,11 @@ public class Person {
         this.life = life;
     }
 
-    public Photo getPhoto() {
+    public File getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Photo photo) {
+    public void setPhoto(File photo) {
         this.photo = photo;
     }
 

@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.mephi.kaf82.DVM.model.Entry;
-import ru.mephi.kaf82.DVM.model.Media;
+import ru.mephi.kaf82.DVM.model.File;
 import ru.mephi.kaf82.DVM.model.Otchet;
-import ru.mephi.kaf82.DVM.model.Photo;
+import ru.mephi.kaf82.DVM.model.Type;
 import ru.mephi.kaf82.DVM.repository.EntryRepository;
-import ru.mephi.kaf82.DVM.repository.FIleRepository;
+import ru.mephi.kaf82.DVM.repository.FileRepository;
 import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.OtchetRepository;
 import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.repository.TerminalRepository;
+import ru.mephi.kaf82.DVM.util.FileUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class JournalController {
     private MediaRepository mediaRepository;
 
     @Resource
-    private FIleRepository fIleRepository;
+    private FileRepository fIleRepository;
 
     @Resource
     private OtchetRepository otchetRepository;
@@ -54,10 +55,9 @@ public class JournalController {
 
     @RequestMapping(value = "/journals/{id}/video", produces = "application/media")
     public String playVideo(@PathVariable("id") long id, HttpServletResponse response) {
-        Media media = entryRepository.findById(id).get().getMedia();
-        InputStream in = new ByteArrayInputStream(media.getContent());
+        File media = entryRepository.findById(13L).get().getMedia();
+        InputStream in = new ByteArrayInputStream(FileUtil.getFileBytes(media.getHash()));
         response.setHeader("Content-Disposition", "attachment; filename=" + media.getName());
-        response.setHeader("Content-Length", String.valueOf(media.getSizeFound()));
         try {
             IOUtils.copy(in, response.getOutputStream());
         } catch (IOException e) {
@@ -74,18 +74,17 @@ public class JournalController {
         model.addAttribute("terminals", terminalRepository.findAll());
         model.addAttribute("person", entry.getPerson());
         model.addAttribute("entry", entry);
-//        model.addAttribute("logs", fIleRepository.findByEntry(entry));
-//        model.addAttribute("photos", photoRepository.findByEntry(entry));
-//        model.addAttribute("videos", mediaRepository.findByEntry(entry));
+        model.addAttribute("logs", fIleRepository.findByEntryAndType(entry, Type.LOG));
+        model.addAttribute("photos", fIleRepository.findByEntryAndType(entry, Type.IMAGE));
+        model.addAttribute("videos", fIleRepository.findByEntryAndType(entry, Type.MEDIA));
         return "showData";
     }
 
     @RequestMapping(value = "/journals/{id}/showData/{v_id}/video", produces = "application/media")
     public String showVideo(@PathVariable("id") long id, @PathVariable("v_id") long v_id, HttpServletResponse response) {
-        Media media = mediaRepository.findById(v_id).get();
-        InputStream in = new ByteArrayInputStream(media.getContent());
+        File media = fIleRepository.findById(v_id).get();
+        InputStream in = new ByteArrayInputStream(FileUtil.getFileBytes(media.getHash()));
         response.setHeader("Content-Disposition", "attachment; filename=" + media.getName());
-        response.setHeader("Content-Length", String.valueOf(media.getSizeFound()));
         try {
             IOUtils.copy(in, response.getOutputStream());
         } catch (IOException e) {
@@ -97,11 +96,10 @@ public class JournalController {
     }
 
     @RequestMapping(value = "/journals/{id}/showData/{p_id}/photo")
-    public String showLog(@PathVariable("id") long id, @PathVariable("p_id") long v_id, HttpServletResponse response) {
-        Photo photo = photoRepository.findById(v_id).get();
-        InputStream in = new ByteArrayInputStream(photo.getContent());
-        response.setContentType("image/jpeg");
-        response.setHeader("Content-Length", String.valueOf(photo.getContent().length));
+    public String showLog(@PathVariable("id") long id, @PathVariable("p_id") long p_id, HttpServletResponse response) {
+        File photo = fIleRepository.findById(p_id).get();
+        InputStream in = new ByteArrayInputStream(FileUtil.getFileBytes(photo.getHash()));
+        response.setHeader("Content-Disposition", "attachment; filename=" + photo.getName());
         try {
             IOUtils.copy(in, response.getOutputStream());
         } catch (IOException e) {
@@ -118,9 +116,9 @@ public class JournalController {
         Otchet otchet = new Otchet();
         otchet.setPerson(entry.getPerson());
         otchet.setDate(Instant.now());
-        otchet.setMedia(entry.getMediaList());
-        otchet.setName("Othcet");
-        otchet.setPhoto(entry.getPhotos());
+//        otchet.setMedia(entry.getMediaList());
+//        otchet.setName("Othcet");
+//        otchet.setPhoto(entry.getPhotos());
         otchetRepository.save(otchet);
         return "redirect:/otchets";
     }

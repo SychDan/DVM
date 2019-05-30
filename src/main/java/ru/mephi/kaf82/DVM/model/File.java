@@ -3,28 +3,30 @@ package ru.mephi.kaf82.DVM.model;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import java.time.Instant;
 
 @Entity
 public class File extends AbstractPersistable<Long> {
 
     @Transient
-    @Column(length = 200)
     private MultipartFile file;
 
     private String name;
 
-    @Lob
-    private byte[] content;
+    private String hash;
 
-    private String contentType;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @ManyToOne
     private Entry entry;
+
+    private Instant date;
 
     public MultipartFile getFile() {
         return file;
@@ -42,27 +44,35 @@ public class File extends AbstractPersistable<Long> {
         this.name = name;
     }
 
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
     public Entry getEntry() {
         return entry;
     }
 
     public void setEntry(Entry entry) {
         this.entry = entry;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
     }
 }
