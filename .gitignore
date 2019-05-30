@@ -1,4 +1,5 @@
 .idea
 *.iml
 target
+src/profiles/development
 src/profiles/heroku
