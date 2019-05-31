@@ -15,8 +15,8 @@
     <link rel='stylesheet' href='<wj:locate path="css/bootstrap.min.css" relativeTo="META-INF/resources"/>'>
     <link href='<spring:url value="/resources/css/sidebar.css"/>' rel="stylesheet" />
     <script type='text/javascript' src='<wj:locate path="jquery.min.js" relativeTo="META-INF/resources"/>'></script>
+    <script mode='text/javascript' src='<wj:locate path="js/bootstrap.min.js" relativeTo="META-INF/resources"/>'></script>
     <script type="text/javascript" src='<spring:url value="/resources/js/table.js"/>'></script>
-
 <%--    <script type='text/javascript' src='<wj:locate path="js/bootstrap.min.js" relativeTo="META-INF/resources"/>'></script>--%>
 <%--    <script type='text/javascript' src='<wj:locate path="js/bootstrap.bundle.min.js" relativeTo="META-INF/resources"/>'></script>--%>
 </head>
@@ -128,6 +128,8 @@
             <button id="update" class="btn btn-primary" disabled autocomplete = "off">Обновить</button>
             <button id="delete" class="btn btn-danger" disabled autocomplete = "off">Удалить</button>
             <button id="download" class="btn btn-primary" disabled autocomplete = "off">Скачать</button>
+            <button id="showModal" mode="button" class="btn btn-primary showModal" data-toggle="modal"
+                    data-target="#exampleModal" disabled id="showModal">Показать фото</button>
             <table class="table table-bordered" id="myTable">
                 <thead>
                 <tr>
@@ -165,6 +167,33 @@
         </div>
     </div>
     <!-- /#page-content-wrapper -->
+
+    <!-- Modal window -->
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="modalContents">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Фото сотрудника</h5>
+                    <button mode="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="areaValue">
+                </div>
+                <div class="modal-footer">
+                    <button mode="button" class="btn btn-primary"
+                            data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- end Modal -->
 
 </div>
 <!-- /#wrapper -->

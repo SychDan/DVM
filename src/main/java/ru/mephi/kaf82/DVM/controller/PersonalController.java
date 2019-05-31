@@ -1,5 +1,6 @@
 package ru.mephi.kaf82.DVM.controller;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -24,7 +25,9 @@ import ru.mephi.kaf82.DVM.util.PersonValidator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
 
 @Controller
@@ -125,5 +128,20 @@ public class PersonalController {
         FileCopyUtils.copy(FileUtil.getFileBytes(photo.getHash()), response.getOutputStream());
 
         return "redirect:/persons";
+    }
+
+    @RequestMapping(value = "/persons/{id}/showData")
+    public String showPhoto(@PathVariable("id") long id, HttpServletResponse response) {
+        Person person = personRepository.findById(id).get();
+        File photo = person.getPhoto();
+        InputStream in = new ByteArrayInputStream(FileUtil.getFileBytes(photo.getHash()));
+        response.setHeader("Content-Disposition", "attachment; filename=" + photo.getName());
+        try {
+            IOUtils.copy(in, response.getOutputStream());
+        } catch (IOException e) {
+// TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "" + response;
     }
 }
