@@ -51,6 +51,7 @@ public class TerminalController {
     public String save(@ModelAttribute("terminalForm") @Validated Terminal terminal, BindingResult result, RedirectAttributes redirectAttributes , Model model) {
         List<String> groups = terminalRepository.findAllGroup();
         if (result.hasErrors()) {
+            model.addAttribute("terminals", terminalRepository.findAll());
             return "addOrEditTerminal";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");

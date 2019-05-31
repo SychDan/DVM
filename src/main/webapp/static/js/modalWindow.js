@@ -31,7 +31,7 @@ $(document).ready(function () {
 
     $('#logTable').on('click', '.clickable-row', function(event) {
         url = window.location.pathname;
-        type = "photo";
+        type = "log";
         id = $(this).closest('tr').find('td:first').text();
         $(this).addClass('table-active').siblings().removeClass('table-active');
         $('#showModal').removeAttr('disabled');
@@ -52,14 +52,26 @@ $(document).ready(function () {
             div.innerHTML = "<video id=\'video_telechargeable\' width=\'360\' height=\'250\' controls><source src='/journals/" + id + "/video\' type=\'video/mp4\'></source></video>";
             document.getElementById("areaValue").removeChild(document.getElementById("areaValue").firstChild);
             document.getElementById("areaValue").appendChild(div);
-        } else if (type.equals("video")) {
-            div.innerHTML = "<video id=\'video_telechargeable\' width=\'360\' height=\'250\' controls><source src='" + url + id + "/photo\' type=\'video/mp4\'></source></video>";
+        } else if (type === "video") {
+            div.innerHTML = "<video id=\'video_telechargeable\' width=\'360\' height=\'250\' controls><source src='" + url + "/" + id + "/photo\' type=\'video/mp4\'></source></video>";
             document.getElementById("areaValue").removeChild(document.getElementById("areaValue").firstChild);
             document.getElementById("areaValue").appendChild(div);
-        } else if (type.equals("photo")) {
-            div.innerHTML = "<img alt='image' src='" + url + id + "/photo' width=100 height=100>";
+        } else if (type === "photo") {
+            div.innerHTML = "<img alt='image' src='" + url + "/" + id + "/photo' width=100% height=100%>";
             document.getElementById("areaValue").removeChild(document.getElementById("areaValue").firstChild);
             document.getElementById("areaValue").appendChild(div);
+        } else if (type === "log") {
+            $.ajax({
+                type : 'POST',
+                url : url + "/" + id + "/log",
+                success : function(data) {
+                    //Get Area name after AJAX call
+                    var nomeArea = data;
+                    //Valorize HTML
+                    $("#areaValue").html(nomeArea);
+                    //Finally open popup
+                }
+            });
         }
         //Finally open popup
         $('#exampleModal').modal('show');

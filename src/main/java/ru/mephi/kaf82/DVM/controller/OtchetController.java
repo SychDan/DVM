@@ -2,7 +2,6 @@ package ru.mephi.kaf82.DVM.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -11,17 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mephi.kaf82.DVM.model.File;
-import ru.mephi.kaf82.DVM.model.Media;
 import ru.mephi.kaf82.DVM.model.Otchet;
-import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.model.Type;
 import ru.mephi.kaf82.DVM.repository.FileRepository;
-import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.OtchetRepository;
-import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.repository.TerminalRepository;
 import ru.mephi.kaf82.DVM.service.AuthService;
 import ru.mephi.kaf82.DVM.util.FileUtil;
@@ -29,7 +23,6 @@ import ru.mephi.kaf82.DVM.util.HashCalculator;
 import ru.mephi.kaf82.DVM.util.OtchetValidator;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Instant;
 
@@ -41,12 +34,6 @@ public class OtchetController {
 
     @Resource
     private OtchetRepository otchetRepository;
-
-    @Resource
-    private PhotoRepository photoRepository;
-
-    @Resource
-    private MediaRepository mediaRepository;
 
     @Resource
     private TerminalRepository terminalRepository;
@@ -72,6 +59,7 @@ public class OtchetController {
     @RequestMapping(value = "/otchets", method = RequestMethod.POST)
     public String save(@ModelAttribute("otchetForm") @Validated Otchet otchet, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("terminals", terminalRepository.findAll());
             return "addOrEditOtchet";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");

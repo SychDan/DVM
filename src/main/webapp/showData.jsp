@@ -76,7 +76,7 @@
                     <li><a class="nav-link" href="/journals">Журнал</a></li>
                     <li><a class="nav-link" href="/persons">Справочники</a></li>
                     <li><a class="nav-link" href="/otchets">Отчеты</a></li>
-                    <li><a class="nav-link" href="#">Настройки</a></li>
+                    <li><a class="nav-link" href="/settings">Настройки</a></li>
                 </ul>
                 <ul class="nav navbar-nav ml-auto mt-2 mt-lg-0">
                     <li><a class="nav-link" href="/logout">Выход</a></li>
@@ -183,9 +183,6 @@
                             </button>
                         </div>
                         <div class="modal-body" id="areaValue">
-                            <video id="video_telechargeable" width="360" height="250" controls>
-                                <source src="/journals/7/video" mode="video/mp4"></source>
-                            </video>
                         </div>
                         <div class="modal-footer">
                             <button mode="button" class="btn btn-primary"

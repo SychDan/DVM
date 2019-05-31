@@ -41,11 +41,7 @@ public class FileUtil {
      * @return полное имя файла.
      */
     public static String getFullClasspathFilename(String file) {
-        try {
-            return new ClassPathResource(file).getURL().getPath();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return FOLDER + file;
     }
 
     /**

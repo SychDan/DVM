@@ -3,38 +3,30 @@ package ru.mephi.kaf82.DVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import ru.mephi.kaf82.DVM.model.Camera;
 import ru.mephi.kaf82.DVM.model.Entry;
 import ru.mephi.kaf82.DVM.model.File;
 import ru.mephi.kaf82.DVM.model.Marshrut;
-import ru.mephi.kaf82.DVM.model.Media;
 import ru.mephi.kaf82.DVM.model.Person;
-import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.model.Terminal;
 import ru.mephi.kaf82.DVM.model.Type;
 import ru.mephi.kaf82.DVM.repository.CameraRepository;
 import ru.mephi.kaf82.DVM.repository.EntryRepository;
 import ru.mephi.kaf82.DVM.repository.FileRepository;
 import ru.mephi.kaf82.DVM.repository.MarshrutRepository;
-import ru.mephi.kaf82.DVM.repository.MediaRepository;
 import ru.mephi.kaf82.DVM.repository.PersonRepository;
-import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.repository.TerminalRepository;
 import ru.mephi.kaf82.DVM.util.FileUtil;
 import ru.mephi.kaf82.DVM.util.HashCalculator;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -54,16 +46,10 @@ public class DataLoader implements InitializingBean {
     private EntryRepository entryRepository;
 
     @Resource
-    private MediaRepository mediaRepository;
-
-    @Resource
     private MarshrutRepository marshrutRepository;
 
     @Resource
     private CameraRepository cameraRepository;
-
-    @Resource
-    private PhotoRepository photoRepository;
 
     @Resource
     private FileRepository fileRepository;
@@ -105,7 +91,7 @@ public class DataLoader implements InitializingBean {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     protected void createMedia() {
-        if (mediaRepository.count() == 0) {
+        if (fileRepository.count() == 0) {
             for (int i=0; i<5; i++) {
                 try {
                     File media = new File();
@@ -130,7 +116,7 @@ public class DataLoader implements InitializingBean {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     protected void createPhoto() {
-        if (photoRepository.count() == 0) {
+        if (fileRepository.count() < 6) {
             for (int i=0; i<2; i++) {
                 try {
                     File photo = new File();

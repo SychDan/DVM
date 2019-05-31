@@ -45,6 +45,7 @@ public class MarshrutController {
     @RequestMapping(value = "/persons/marshruts/", method = RequestMethod.POST)
     public String saveMarshrut(@ModelAttribute("marshrutForm") @Validated Marshrut marshrut, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("terminals", terminalRepository.findAll());
             return "addOrEditMarshrut";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");

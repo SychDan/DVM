@@ -32,15 +32,6 @@ public class Entry extends AbstractPersistable<Long> {
     @ManyToOne
     private File media;
 
-    @OneToMany
-    private List<Media> mediaList = new ArrayList<>();
-
-    @OneToMany
-    private List<Photo> photos = new ArrayList<>();
-
-    @OneToMany
-    private List<File> logs = new ArrayList<>();
-
     private Instant dateOfEntry;
 
 
@@ -92,29 +83,5 @@ public class Entry extends AbstractPersistable<Long> {
 
     public void setMedia(File media) {
         this.media = media;
-    }
-
-    public List<Media> getMediaList() {
-        return mediaList;
-    }
-
-    public void setMediaList(List<Media> mediaList) {
-        this.mediaList = mediaList;
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
-    }
-
-    public List<File> getLogs() {
-        return logs;
-    }
-
-    public void setLogs(List<File> logs) {
-        this.logs = logs;
     }
 }

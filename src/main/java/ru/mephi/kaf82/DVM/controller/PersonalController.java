@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.mephi.kaf82.DVM.model.File;
 import ru.mephi.kaf82.DVM.model.Person;
-import ru.mephi.kaf82.DVM.model.Photo;
 import ru.mephi.kaf82.DVM.model.Type;
 import ru.mephi.kaf82.DVM.repository.FileRepository;
 import ru.mephi.kaf82.DVM.repository.PersonRepository;
-import ru.mephi.kaf82.DVM.repository.PhotoRepository;
 import ru.mephi.kaf82.DVM.repository.TerminalRepository;
 import ru.mephi.kaf82.DVM.util.FileUtil;
 import ru.mephi.kaf82.DVM.util.HashCalculator;
@@ -26,15 +24,11 @@ import ru.mephi.kaf82.DVM.util.PersonValidator;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.time.Instant;
 
 @Controller
 public class PersonalController {
-
-    @Resource
-    private PhotoRepository photoRepository;
 
     @Resource
     private PersonRepository personRepository;
@@ -63,6 +57,7 @@ public class PersonalController {
     @RequestMapping(value = "/persons", method = RequestMethod.POST)
     public String savePerson(@ModelAttribute("personForm") @Validated Person person, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("terminals", terminalRepository.findAll());
             return "addOrEditPerson";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");

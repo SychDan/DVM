@@ -45,6 +45,7 @@ public class DeviceController {
     @RequestMapping(value = "/persons/devices/", method = RequestMethod.POST)
     public String saveDevice(@ModelAttribute("cameraForm") @Validated Camera camera, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("terminals", terminalRepository.findAll());
             return "addOrEditDevice";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
