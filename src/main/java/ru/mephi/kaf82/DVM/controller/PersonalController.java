@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
 
+/**
+ * Страницы работ с персоналом
+ */
 @Controller
 public class PersonalController {
 

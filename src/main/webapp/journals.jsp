@@ -102,7 +102,7 @@
                     data-target="#exampleModal" disabled id="showModal">Показать видео</button>
             <button mode="button" class="btn btn-primary" disabled id="more">Подробнее</button>
 
-            <table class="table-bordered table" id="myTable">
+            <table class="table-bordered table" id="journalTable">
                 <thead>
                 <tr>
                     <th style="display: none">ID</th>

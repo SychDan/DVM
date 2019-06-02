@@ -18,6 +18,9 @@ import ru.mephi.kaf82.DVM.util.DeviceValidator;
 
 import javax.annotation.Resource;
 
+/**
+ * Страница работы с устройствами
+ */
 @Controller
 public class DeviceController {
 
@@ -78,7 +81,7 @@ public class DeviceController {
     }
 
     @RequestMapping(value = "/persons/devices/{id}/delete", method = RequestMethod.GET)
-    public String update(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
         cameraRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Устройство успешно успешно удалено!");

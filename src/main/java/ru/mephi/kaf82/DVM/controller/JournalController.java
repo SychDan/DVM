@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
 
+/**
+ * Страница работы с журналами
+ */
 @Controller
 public class JournalController {
 
@@ -50,7 +53,7 @@ public class JournalController {
 
     @RequestMapping(value = "/journals/{id}/video", produces = "application/media")
     public String playVideo(@PathVariable("id") long id, HttpServletResponse response) {
-        File media = entryRepository.findById(13L).get().getMedia();
+        File media = entryRepository.findById(id).get().getMedia();
         InputStream in = new ByteArrayInputStream(FileUtil.getFileBytes(media.getHash()));
         response.setHeader("Content-Disposition", "attachment; filename=" + media.getName());
         try {

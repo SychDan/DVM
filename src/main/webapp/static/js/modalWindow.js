@@ -4,7 +4,7 @@ $(document).ready(function () {
     var url;
     var type;
 
-    $('#myTable').on('click', '.clickable-row', function(event) {
+    $('#journalTable').on('click', '.clickable-row', function(event) {
         url = window.location.pathname;
         type = "auth";
         id = $(this).closest('tr').find('td:first').text();

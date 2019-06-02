@@ -18,6 +18,9 @@ import ru.mephi.kaf82.DVM.util.MarshrutValidator;
 
 import javax.annotation.Resource;
 
+/**
+ * Сраницы работ с маршрутами
+ */
 @Controller
 public class MarshrutController {
 
@@ -78,7 +81,7 @@ public class MarshrutController {
     }
 
     @RequestMapping(value = "/persons/marshruts/{id}/delete", method = RequestMethod.GET)
-    public String update(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
         marshrutRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Маршрут успешно удален!");

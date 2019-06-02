@@ -26,6 +26,9 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.time.Instant;
 
+/**
+ * Страницы работ с отчетами
+ */
 @Controller
 public class OtchetController {
 
@@ -128,7 +131,7 @@ public class OtchetController {
     }
 
     @RequestMapping(value = "/otchets/{id}/delete", method = RequestMethod.GET)
-    public String update(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
         otchetRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Отчет успешно удален!");

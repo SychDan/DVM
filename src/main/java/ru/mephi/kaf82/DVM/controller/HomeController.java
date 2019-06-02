@@ -8,6 +8,9 @@ import ru.mephi.kaf82.DVM.repository.EntryRepository;
 
 import javax.annotation.Resource;
 
+/**
+ * Наальная страница
+ */
 @Controller
 public class HomeController {
 

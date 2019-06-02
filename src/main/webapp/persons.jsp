@@ -128,7 +128,7 @@
             <button id="update" class="btn btn-primary" disabled autocomplete = "off">Обновить</button>
             <button id="delete" class="btn btn-danger" disabled autocomplete = "off">Удалить</button>
             <button id="download" class="btn btn-primary" disabled autocomplete = "off">Скачать</button>
-            <button id="showModal" mode="button" class="btn btn-primary showModal" data-toggle="modal"
+            <button id="showModalWin" mode="button" class="btn btn-primary showModal" data-toggle="modal"
                     data-target="#exampleModal" disabled id="showModal">Показать фото</button>
             <table class="table table-bordered" id="myTable">
                 <thead>

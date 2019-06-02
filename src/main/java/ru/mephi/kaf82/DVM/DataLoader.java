@@ -54,6 +54,12 @@ public class DataLoader implements InitializingBean {
     @Resource
     private FileRepository fileRepository;
 
+    private static final String MEDIA_PATH="/home/danny/Downloads/Rick_Astley_Never_Gonna_Give_You_Up (online-video-cutter.com).mp4";
+
+    private static final String PHOTO_PATH="/home/danny/Pictures/Wall/37669442555_6927a3d2df_o.jpg";
+
+    private static final String LOG_PATH="/home/danny/Downloads/log.txt";
+
     @Override
     public void afterPropertiesSet() throws Exception {
         createPerson();
@@ -95,7 +101,7 @@ public class DataLoader implements InitializingBean {
             for (int i=0; i<5; i++) {
                 try {
                     File media = new File();
-                    Path path = Paths.get("/home/danny/Downloads/Rick_Astley_Never_Gonna_Give_You_Up (online-video-cutter.com).mp4");
+                    Path path = Paths.get(MEDIA_PATH);
                     String name = path.getFileName().toString();
                     String hash = HashCalculator.getSHA256String(Files.readAllBytes(path));
                     byte[] fileData = Files.readAllBytes(path);
@@ -120,7 +126,7 @@ public class DataLoader implements InitializingBean {
             for (int i=0; i<2; i++) {
                 try {
                     File photo = new File();
-                    Path path = Paths.get("/home/danny/Pictures/Wall/37669442555_6927a3d2df_o.jpg");
+                    Path path = Paths.get(PHOTO_PATH);
                     String name = path.getFileName().toString();
                     String hash = HashCalculator.getSHA256String(Files.readAllBytes(path));
                     byte[] fileData = Files.readAllBytes(path);
@@ -143,7 +149,7 @@ public class DataLoader implements InitializingBean {
     protected void createFile() {
         try {
             File file = new File();
-            Path path = Paths.get("/home/danny/Downloads/log.txt");
+            Path path = Paths.get(LOG_PATH);
             String name = path.getFileName().toString();
             String hash = HashCalculator.getSHA256String(Files.readAllBytes(path));
             byte[] fileData = Files.readAllBytes(path);

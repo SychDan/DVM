@@ -21,6 +21,9 @@ import ru.mephi.kaf82.DVM.util.TeminalValidator;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * Страницы работ с терминалом
+ */
 @Controller
 public class TerminalController {
 
