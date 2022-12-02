@@ -14,7 +14,7 @@
         <spring.version>5.2.21.RELEASE</spring.version>
         <spring-security-version>5.2.10.RELEASE</spring-security-version>
         <slf4j.version>1.7.25</slf4j.version>
-        <c3p0.version>0.9.5.2</c3p0.version>
+        <c3p0.version>0.9.5.4</c3p0.version>
         <hibernate.validator>5.4.1.Final</hibernate.validator>
         <wtp.version>none</wtp.version>
         <jsp.version>2.3.1</jsp.version>
